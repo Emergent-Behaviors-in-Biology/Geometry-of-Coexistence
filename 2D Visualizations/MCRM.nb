@@ -1,0 +1,2386 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 13.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     99729,       2378]
+NotebookOptionsPosition[     96675,       2319]
+NotebookOutlinePosition[     97118,       2336]
+CellTagsIndexPosition[     97075,       2333]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["Define the parameters:", "Text",
+ CellChangeTimes->{{3.8823787453754187`*^9, 
+  3.882378747658657*^9}},ExpressionUUID->"36779f25-b186-4274-a0be-\
+1d3270222808"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"c", "=", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"0.7185`", ",", "0.202`"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"0.2675`", ",", "0.464`"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"0.2325`", ",", "0.812`"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"0.599`", ",", "0.577`"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"0.4875`", ",", "0.273`"}], "}"}]}], "}"}], "[", 
+    RowBox[{"[", 
+     RowBox[{"{", 
+      RowBox[{"4", ",", "2", ",", "5", ",", "1", ",", "3"}], "}"}], "]"}], 
+    "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"m", "=", 
+   RowBox[{"ConstantArray", "[", 
+    RowBox[{"1", ",", 
+     RowBox[{"Length", "@", "c"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"w", "=", 
+   RowBox[{"ConstantArray", "[", 
+    RowBox[{"1", ",", 
+     RowBox[{
+      RowBox[{"Dimensions", "[", "c", "]"}], "[", 
+      RowBox[{"[", "2", "]"}], "]"}]}], "]"}]}], ";"}]}], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.880331010010516*^9, 3.88033104820498*^9}, {
+   3.880331733017331*^9, 3.8803317331865*^9}, 3.880331791186716*^9, {
+   3.8819779023018217`*^9, 3.881977903500119*^9}, {3.882020559952635*^9, 
+   3.882020568020184*^9}, {3.882020613992619*^9, 3.882020655185205*^9}, {
+   3.8823808718853693`*^9, 3.882380873559483*^9}, {3.8823809846066723`*^9, 
+   3.882380984951634*^9}, {3.886543645787901*^9, 3.886543649903307*^9}, {
+   3.886543738514476*^9, 3.886543738710114*^9}, {3.8865440212011747`*^9, 
+   3.8865440216896343`*^9}},
+ CellLabel->"In[1]:=",ExpressionUUID->"21cd8b03-76d2-4fdb-8593-cd55db9c7c13"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"MCRMQPPositive", "[", 
+   RowBox[{"K_", ",", "c_", ",", "m_", ",", "w_"}], "]"}], " ", ":=", 
+  RowBox[{
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"Rs", "=", 
+       RowBox[{"Table", "[", 
+        RowBox[{
+         SubscriptBox["R", "\[Alpha]"], ",", 
+         RowBox[{"{", 
+          RowBox[{"\[Alpha]", ",", "1", ",", 
+           RowBox[{"Length", "[", "K", "]"}]}], "}"}]}], "]"}]}], "}"}], ",", 
+     "\[IndentingNewLine]", " ", 
+     RowBox[{"QuadraticOptimization", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{
+           FractionBox["1", "2"], 
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{"w", " ", "#"}], ")"}], ".", "#"}]}], "&"}], ")"}], "[", 
+        
+        RowBox[{"(", 
+         RowBox[{"Rs", "-", "K"}], ")"}], "]"}], ",", 
+       RowBox[{"Join", "[", 
+        RowBox[{
+         RowBox[{"Thread", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"w", " ", "#"}], "&"}], "/@", "c"}], ")"}], ".", 
+            RowBox[{"(", "Rs", ")"}]}], "<=", "m"}], "]"}], ",", 
+         RowBox[{"Thread", "[", 
+          RowBox[{
+           RowBox[{"ConstantArray", "[", 
+            RowBox[{"0", ",", 
+             RowBox[{"Length", "[", "K", "]"}]}], "]"}], "<=", "Rs"}], 
+          "]"}]}], "]"}], ",", "Rs", ",", 
+       RowBox[{"{", 
+        RowBox[{"\"\<PrimalMinimizer\>\"", ",", "\"\<DualMaximizer\>\""}], 
+        "}"}], ",", 
+       RowBox[{"Tolerance", "\[Rule]", 
+        RowBox[{"10", "^", 
+         RowBox[{"(", 
+          RowBox[{"-", "10"}], ")"}]}]}]}], "]"}]}], "\[IndentingNewLine]", 
+    "]"}], "//", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"#", "[", 
+       RowBox[{"[", "1", "]"}], "]"}], ",", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"#", "[", 
+         RowBox[{"[", "2", "]"}], "]"}], "[", 
+        RowBox[{"[", "2", "]"}], "]"}], "[", 
+       RowBox[{"[", 
+        RowBox[{"1", ";;", 
+         RowBox[{"Length", "[", "m", "]"}]}], "]"}], "]"}]}], "}"}], 
+    "&"}]}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.880407323922844*^9, 3.88040736690003*^9}, {
+   3.8804074036516542`*^9, 3.8804074666489487`*^9}, {3.880407590597707*^9, 
+   3.880407612416437*^9}, 3.880407660144497*^9, {3.880407701770212*^9, 
+   3.880407712837706*^9}, {3.8804077506981907`*^9, 3.8804077789547777`*^9}, {
+   3.880407872742581*^9, 3.8804079290973454`*^9}, {3.882020685376473*^9, 
+   3.882020706865905*^9}, {3.882020815880436*^9, 3.882020822649879*^9}, {
+   3.882021584928*^9, 3.88202160866698*^9}, {3.882021652099153*^9, 
+   3.8820216524027967`*^9}, {3.882021685775731*^9, 3.882021685922698*^9}, {
+   3.882021755629706*^9, 3.882021757090805*^9}, {3.88202198240851*^9, 
+   3.882021995093231*^9}, {3.882022375818811*^9, 3.882022380039237*^9}},
+ CellLabel->"In[4]:=",ExpressionUUID->"60357810-26fe-4afe-804c-d36c20fd5cee"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"addPCHvecs", "[", "c_", "]"}], ":=", 
+   RowBox[{"Join", "[", 
+    RowBox[{"c", ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"Max", "[", 
+          RowBox[{
+           RowBox[{"c", "\[Transpose]"}], "[", 
+           RowBox[{"[", "1", "]"}], "]"}], "]"}], ",", "0"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", 
+         RowBox[{"Max", "[", 
+          RowBox[{
+           RowBox[{"c", "\[Transpose]"}], "[", 
+           RowBox[{"[", "2", "]"}], "]"}], "]"}]}], "}"}]}], "}"}]}], "]"}]}],
+   ";"}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.8803312033117123`*^9, 3.8803312328300667`*^9}},
+ CellLabel->"In[5]:=",ExpressionUUID->"f61cc744-98f3-44a2-92df-0f8978599290"],
+
+Cell[TextData[{
+ "Click and drag the crosshair locators to adjust the consumption vectors ",
+ Cell[BoxData[
+  FormBox[
+   TemplateBox[<|"boxes" -> FormBox[
+       SubscriptBox[
+        StyleBox["c", FontSlant -> "Bold"], 
+        StyleBox["i", "TI"]], TraditionalForm], "errors" -> {}, "input" -> 
+     "\\mathbf c_i", "state" -> "Boxes"|>,
+    "TeXAssistantTemplate"], TraditionalForm]],ExpressionUUID->
+  "9a248987-40fa-48b0-94e0-a672ddef764d"]
+}], "Text",
+ CellChangeTimes->{{3.882378772163128*^9, 3.882378775628479*^9}, {
+  3.882379059374811*^9, 3.8823790711299763`*^9}, {3.886543652648816*^9, 
+  3.8865436553699417`*^9}},ExpressionUUID->"fb561166-6475-434e-bd72-\
+cbb6c3df69ad"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Dynamic", "@", 
+  RowBox[{"LocatorPane", "[", 
+   RowBox[{
+    RowBox[{"Dynamic", "[", "c", "]"}], ",", 
+    RowBox[{"Show", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"Graphics", "[", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"FaceForm", "@", 
+           RowBox[{"RGBColor", "[", 
+            RowBox[{
+             FractionBox["4", "255"], ",", 
+             FractionBox["41", "255"], ",", 
+             FractionBox["64", "255"], ",", "0.15"}], "]"}]}], ",", 
+          RowBox[{"EdgeForm", "@", 
+           RowBox[{"RGBColor", "[", 
+            RowBox[{
+             FractionBox["4", "255"], ",", 
+             FractionBox["41", "255"], ",", 
+             FractionBox["64", "255"], ",", "0.8"}], "]"}]}], ",", 
+          RowBox[{"Dynamic", "@", 
+           RowBox[{"ConvexHullRegion", "[", 
+            RowBox[{
+             RowBox[{"addPCHvecs", "[", 
+              RowBox[{
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"w", " ", "#"}], "&"}], "/@", "c"}], ")"}], "/", 
+               "m"}], "]"}], "\[Union]", 
+             RowBox[{"{", 
+              RowBox[{"{", 
+               RowBox[{"0", ",", "0"}], "}"}], "}"}]}], "]"}]}], ",", 
+          RowBox[{"Thickness", "[", "0.006", "]"}], ",", 
+          RowBox[{"Arrowheads", "[", ".05", "]"}], ",", 
+          RowBox[{"Dynamic", "@", 
+           RowBox[{
+            RowBox[{"MapIndexed", "[", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{
+                 RowBox[{"PadRight", "[", 
+                  RowBox[{
+                   RowBox[{"{", 
+                    RowBox[{
+                    
+                    TemplateBox[<|
+                    "color" -> 
+                    RGBColor[
+                    0.9764705882352941, 0.6274509803921569, 
+                    0.24705882352941178`]|>,
+                    "RGBColorSwatchTemplate"], ",", 
+                    
+                    TemplateBox[<|
+                    "color" -> 
+                    RGBColor[
+                    0.4470588235294118, 0.6627450980392157, 
+                    0.5607843137254902]|>,
+                    "RGBColorSwatchTemplate"], ",", 
+                    
+                    TemplateBox[<|
+                    "color" -> 
+                    RGBColor[0.6196078431372549, 0.35000000000000003`, 0.78]|>,
+                    "RGBColorSwatchTemplate"], ",", 
+                    
+                    TemplateBox[<|
+                    "color" -> 
+                    RGBColor[0., 0.4117647058823529, 0.5372549019607843]|>,
+                    "RGBColorSwatchTemplate"], ",", 
+                    
+                    TemplateBox[<|
+                    "color" -> 
+                    RGBColor[
+                    0.8470588235294118, 0.06666666666666667, 
+                    0.34901960784313724`]|>,
+                    "RGBColorSwatchTemplate"]}], "}"}], ",", 
+                   RowBox[{"Length", "[", "m", "]"}], ",", "Black"}], "]"}], 
+                 "[", 
+                 RowBox[{"[", 
+                  RowBox[{"First", "@", "#2"}], "]"}], "]"}], ",", 
+                RowBox[{"Arrow", "[", 
+                 RowBox[{"{", 
+                  RowBox[{
+                   RowBox[{"{", 
+                    RowBox[{"0", ",", "0"}], "}"}], ",", "#1"}], "}"}], 
+                 "]"}]}], "}"}], "&"}], "]"}], "[", 
+            RowBox[{
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{
+                RowBox[{"w", " ", "#"}], "&"}], "/@", "c"}], ")"}], "/", 
+             "m"}], "]"}]}]}], "}"}], "]"}], "\[IndentingNewLine]", "}"}], 
+      ",", 
+      RowBox[{"PlotTheme", "\[Rule]", "\"\<Scientific\>\""}], ",", 
+      RowBox[{"AspectRatio", "\[Rule]", "1"}], ",", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"RGBColor", "[", 
+          RowBox[{
+           FractionBox["0", "255"], ",", 
+           FractionBox["92", "255"], ",", 
+           FractionBox["83", "255"]}], "]"}], ",", 
+         RowBox[{"PointSize", "[", "0.015", "]"}]}], "}"}]}], ",", 
+      RowBox[{"ImageSize", "->", "500"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"PlotTheme", "->", "\"\<Scientific\>\""}], ",", 
+      RowBox[{"PlotRange", "->", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0", ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "1"}], "}"}]}], "}"}]}], ",", 
+      RowBox[{"FrameLabel", "->", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Style", "[", 
+           RowBox[{"#", ",", 
+            RowBox[{"FontFamily", "->", "\"\<CMU Serif\>\""}], ",", 
+            RowBox[{"FontSize", "->", "18"}]}], "]"}], "&"}], "/@", 
+         RowBox[{"{", 
+          RowBox[{
+          "\"\<(\!\(\*StyleBox[\"C\",FontWeight->\"Bold\"]\)\!\(\*\
+SubscriptBox[\(\[VeryThinSpace]\), \(i\)]\)\!\(\*SubscriptBox[\()\), \(1\)]\)\
+\>\"", ",", 
+           "\"\<(\!\(\*StyleBox[\"C\",FontWeight->\"Bold\"]\)\!\(\*\
+SubscriptBox[\(\[VeryThinSpace]\), \(i\)]\)\!\(\*SubscriptBox[\()\), \(2\)]\)\
+\>\""}], "}"}]}], ")"}]}], ",", 
+      RowBox[{"Frame", "->", "True"}], ",", 
+      RowBox[{"FrameTicks", "->", "None"}]}], "]"}], ",", 
+    RowBox[{"Appearance", "->", "Automatic"}]}], "]"}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.880331151687852*^9, 3.880331197046633*^9}, {
+   3.880331236339373*^9, 3.880331238058318*^9}, {3.8803312841698112`*^9, 
+   3.880331294027863*^9}, {3.880331326731009*^9, 3.8803313936240997`*^9}, {
+   3.880331438136891*^9, 3.880331514968856*^9}, {3.880331616628674*^9, 
+   3.8803316203213387`*^9}, {3.8803316636093273`*^9, 3.880331788285741*^9}, {
+   3.880331829205434*^9, 3.880331847288473*^9}, {3.880406702755863*^9, 
+   3.8804067029909286`*^9}, {3.88197794591534*^9, 3.881977951134143*^9}, {
+   3.882020729261228*^9, 3.882020730691841*^9}, {3.882020799940926*^9, 
+   3.882020806181674*^9}, {3.882020848884633*^9, 3.8820208671845913`*^9}, {
+   3.882020901004079*^9, 3.882020901740365*^9}, {3.882020937431924*^9, 
+   3.8820210824554577`*^9}, 3.8820211591528273`*^9, {3.8820245929518757`*^9, 
+   3.882024639959785*^9}, {3.882024798075547*^9, 3.882024808357854*^9}, {
+   3.882309900717331*^9, 3.882309902216614*^9}, {3.88237875274218*^9, 
+   3.882378753185505*^9}, 3.882380891567335*^9},
+ CellLabel->"In[6]:=",ExpressionUUID->"2500b529-4ddb-4f95-82e4-50af6e616ebe"],
+
+Cell[BoxData[
+ DynamicBox[ToBoxes[
+   LocatorPane[
+    Dynamic[$CellContext`c], 
+    Show[{
+      Graphics[{
+        FaceForm[
+         RGBColor[4/255, 41/255, 64/255, 0.15]], 
+        EdgeForm[
+         RGBColor[4/255, 41/255, 64/255, 0.8]], 
+        Dynamic[
+         ConvexHullRegion[
+          Union[
+           $CellContext`addPCHvecs[
+           Map[$CellContext`w #& , $CellContext`c]/$CellContext`m], {{0, 
+           0}}]]], 
+        Thickness[0.006], 
+        Arrowheads[0.05], 
+        Dynamic[
+         MapIndexed[{
+           Part[
+            PadRight[{
+              RGBColor[
+              0.9764705882352941, 0.6274509803921569, 0.24705882352941178`], 
+              RGBColor[
+              0.4470588235294118, 0.6627450980392157, 0.5607843137254902], 
+              RGBColor[0.6196078431372549, 0.35000000000000003`, 0.78], 
+              RGBColor[0., 0.4117647058823529, 0.5372549019607843], 
+              RGBColor[
+              0.8470588235294118, 0.06666666666666667, 0.34901960784313724`]}, 
+             Length[$CellContext`m], Black], 
+            First[#2]], 
+           Arrow[{{0, 0}, #}]}& ][
+         Map[$CellContext`w #& , $CellContext`c]/$CellContext`m]]}]}, 
+     PlotTheme -> "Scientific", AspectRatio -> 1, PlotStyle -> {
+       RGBColor[0/255, 92/255, 83/255], 
+       PointSize[0.015]}, ImageSize -> 500, PlotTheme -> "Scientific", 
+     PlotRange -> {{0, 1}, {0, 1}}, FrameLabel -> 
+     Map[Style[#, FontFamily -> "CMU Serif", FontSize -> 18]& , {
+       "(\!\(\*StyleBox[\"C\",FontWeight->\"Bold\"]\)\!\(\*SubscriptBox[\(\
+\[VeryThinSpace]\), \(i\)]\)\!\(\*SubscriptBox[\()\), \(1\)]\)", 
+        "(\!\(\*StyleBox[\"C\",FontWeight->\"Bold\"]\)\!\(\*SubscriptBox[\(\
+\[VeryThinSpace]\), \(i\)]\)\!\(\*SubscriptBox[\()\), \(2\)]\)"}], Frame -> 
+     True, FrameTicks -> None], Appearance -> Automatic], StandardForm],
+  ImageSizeCache->{506., {250., 256.}}]], "Output",
+ CellChangeTimes->{
+  3.880331238589834*^9, {3.8803312902588863`*^9, 3.88033129430816*^9}, {
+   3.880331331403661*^9, 3.880331394075349*^9}, {3.880331442551359*^9, 
+   3.880331515332548*^9}, {3.880331618061602*^9, 3.880331620500862*^9}, {
+   3.880331673355145*^9, 3.880331758194031*^9}, 3.880331792373418*^9, {
+   3.8803318299220953`*^9, 3.8803318540226173`*^9}, 3.880331909512623*^9, 
+   3.880406703198744*^9, 3.880461597808075*^9, {3.880661895161158*^9, 
+   3.880661906031293*^9}, 3.881779194344693*^9, 3.881977908267559*^9, 
+   3.881977951663814*^9, 3.88202083005892*^9, {3.8820209493212*^9, 
+   3.882021082685726*^9}, 3.882021160043376*^9, {3.882024596008052*^9, 
+   3.882024640291397*^9}, 3.882024808786358*^9, {3.882196436601873*^9, 
+   3.882196442335968*^9}, 3.8823095349709044`*^9, 3.882309902421276*^9, 
+   3.882377048767568*^9, 3.882378054688753*^9, 3.88237875342518*^9, {
+   3.882380869358531*^9, 3.882380892538827*^9}, {3.882381009764536*^9, 
+   3.882381030041272*^9}, 3.882381901516554*^9, 3.882972343978868*^9, 
+   3.8834978919133387`*^9, 3.8857561086589003`*^9, 3.885905438611479*^9, 
+   3.886543151827753*^9, 3.886543656208552*^9, 3.8865437416025667`*^9, 
+   3.886544027537982*^9, 3.886864390927351*^9, 3.88686496916304*^9, 
+   3.8894478668458776`*^9, {3.88944813944483*^9, 3.889448156612632*^9}},
+ CellLabel->"Out[6]=",ExpressionUUID->"ad32f2b1-a6c9-432a-82e9-17bd5dc2e027"]
+}, Open  ]],
+
+Cell[TextData[{
+ "Click and drag the sliders below to adjust the values of ",
+ Cell[BoxData[
+  FormBox[
+   TemplateBox[<|"boxes" -> FormBox[
+       SubscriptBox[
+        StyleBox["m", "TI"], 
+        StyleBox["i", "TI"]], TraditionalForm], "errors" -> {}, "input" -> 
+     "m_i", "state" -> "Boxes"|>,
+    "TeXAssistantTemplate"], TraditionalForm]],ExpressionUUID->
+  "582f556d-2778-40b9-8854-3f026c12cebf"],
+ " and ",
+ Cell[BoxData[
+  FormBox[
+   TemplateBox[<|"boxes" -> FormBox[
+       SubscriptBox[
+        StyleBox["w", "TI"], "\[Alpha]"], TraditionalForm], "errors" -> {}, 
+     "input" -> "w_\\alpha", "state" -> "Boxes"|>,
+    "TeXAssistantTemplate"], TraditionalForm]],ExpressionUUID->
+  "ef3f73d1-3eb1-4b66-8dcb-1f4dcdbccc53"]
+}], "Text",
+ CellChangeTimes->{{3.882379079681385*^9, 
+  3.882379109476071*^9}},ExpressionUUID->"3d7ac75e-7e82-474d-8aaa-\
+3ccfb560b968"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Grid", "[", 
+  RowBox[{"Join", "[", 
+   RowBox[{
+    RowBox[{"Table", "[", 
+     RowBox[{
+      RowBox[{"With", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"i", "=", "i"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"Subscript", "[", 
+           RowBox[{"\"\<m\>\"", ",", "i"}], "]"}], ",", 
+          RowBox[{"Slider", "[", 
+           RowBox[{
+            RowBox[{"Dynamic", "[", 
+             RowBox[{"m", "[", 
+              RowBox[{"[", "i", "]"}], "]"}], "]"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"0.1", ",", "3"}], "}"}]}], "]"}]}], "}"}]}], "]"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"i", ",", "1", ",", 
+        RowBox[{"Length", "[", "m", "]"}]}], "}"}]}], "]"}], ",", 
+    RowBox[{"Table", "[", 
+     RowBox[{
+      RowBox[{"With", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"i", "=", "\[Alpha]"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"Subscript", "[", 
+           RowBox[{"\"\<w\>\"", ",", "i"}], "]"}], ",", 
+          RowBox[{"Slider", "[", 
+           RowBox[{
+            RowBox[{"Dynamic", "[", 
+             RowBox[{"w", "[", 
+              RowBox[{"[", "i", "]"}], "]"}], "]"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"0.1", ",", "3"}], "}"}]}], "]"}]}], "}"}]}], "]"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"\[Alpha]", ",", "1", ",", 
+        RowBox[{"Length", "[", "w", "]"}]}], "}"}]}], "]"}]}], "]"}], 
+  "]"}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.880332374513571*^9, 3.880332399941523*^9}, {
+  3.880406472323984*^9, 3.880406608150353*^9}, {3.880406656855063*^9, 
+  3.880406673200322*^9}, {3.880406785737278*^9, 3.880406787757764*^9}, {
+  3.882021114313652*^9, 3.882021145882761*^9}, {3.882378581118104*^9, 
+  3.882378592279006*^9}},
+ CellLabel->"In[7]:=",ExpressionUUID->"167a388c-5158-489a-b99d-962e188b4209"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     SubscriptBox["\<\"m\"\>", "1"], 
+     SliderBox[Dynamic[
+       Part[$CellContext`m, 1]], {0.1, 3}]},
+    {
+     SubscriptBox["\<\"m\"\>", "2"], 
+     SliderBox[Dynamic[
+       Part[$CellContext`m, 2]], {0.1, 3}]},
+    {
+     SubscriptBox["\<\"m\"\>", "3"], 
+     SliderBox[Dynamic[
+       Part[$CellContext`m, 3]], {0.1, 3}]},
+    {
+     SubscriptBox["\<\"m\"\>", "4"], 
+     SliderBox[Dynamic[
+       Part[$CellContext`m, 4]], {0.1, 3}]},
+    {
+     SubscriptBox["\<\"m\"\>", "5"], 
+     SliderBox[Dynamic[
+       Part[$CellContext`m, 5]], {0.1, 3}]},
+    {
+     SubscriptBox["\<\"w\"\>", "1"], 
+     SliderBox[Dynamic[
+       Part[$CellContext`w, 1]], {0.1, 3}]},
+    {
+     SubscriptBox["\<\"w\"\>", "2"], 
+     SliderBox[Dynamic[
+       Part[$CellContext`w, 2]], {0.1, 3}]}
+   },
+   AutoDelete->False,
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Output",
+ CellChangeTimes->{{3.8804065017425547`*^9, 3.880406542611664*^9}, {
+   3.88040660862428*^9, 3.880406620291057*^9}, {3.880406665698398*^9, 
+   3.8804066830390263`*^9}, 3.8804067880029182`*^9, 3.88046160638486*^9, {
+   3.880661895269354*^9, 3.8806619060429783`*^9}, 3.881779199118739*^9, 
+   3.8819779669113903`*^9, {3.882021139776966*^9, 3.882021146262991*^9}, 
+   3.882024815125762*^9, 3.882196436771756*^9, 3.882309535023101*^9, 
+   3.882377049001854*^9, 3.882378054704122*^9, 3.882378592934518*^9, {
+   3.882380869375226*^9, 3.8823808960617523`*^9}, {3.882380991024544*^9, 
+   3.8823810300531397`*^9}, 3.882381901530735*^9, 3.882972344189354*^9, 
+   3.883497891926921*^9, 3.885756108918899*^9, 3.88590543870477*^9, 
+   3.886543152091393*^9, 3.886543657625454*^9, 3.886543742973868*^9, 
+   3.886544032514928*^9, 3.886864390946151*^9, 3.8868649691935997`*^9, 
+   3.889447867147031*^9, {3.889448139476201*^9, 3.889448156641514*^9}},
+ CellLabel->"Out[7]=",ExpressionUUID->"65681bf6-8a44-48de-87b3-f4705ede1024"]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"PFR", " ", "[", 
+    RowBox[{"c_", ",", "m_", ",", "w_"}], "]"}], ":=", " ", 
+   RowBox[{"RegionPlot", "[", 
+    RowBox[{
+     RowBox[{"RegionIntersection", "[", 
+      RowBox[{"Join", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{
+          RowBox[{"HalfSpace", "[", 
+           RowBox[{"#", ",", "1"}], "]"}], "&"}], "/@", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"w", " ", "#"}], "&"}], "/@", "c"}], ")"}], "/", "m"}], 
+          ")"}]}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"HalfSpace", "[", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"-", "1"}], ",", "0"}], "}"}], ",", "0"}], "]"}], ",", 
+          RowBox[{"HalfSpace", "[", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"0", ",", 
+              RowBox[{"-", "1"}]}], "}"}], ",", "0"}], "]"}]}], "}"}]}], 
+       "]"}], "]"}], ",", 
+     RowBox[{"PlotStyle", "\[Rule]", 
+      RowBox[{"RGBColor", "[", 
+       RowBox[{
+        FractionBox["243", "255"], ",", 
+        FractionBox["242", "255"], ",", 
+        FractionBox["223", "255"]}], "]"}]}], ",", 
+     RowBox[{"BoundaryStyle", "\[Rule]", 
+      RowBox[{"RGBColor", "[", 
+       RowBox[{"0.73", ",", "0.68", ",", "0.4"}], "]"}]}], ",", 
+     RowBox[{"PlotRange", "->", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"-", "3"}], ",", "3"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"-", "3"}], ",", "3"}], "}"}]}], "}"}]}], ",", 
+     RowBox[{"PlotTheme", "->", "\"\<Scientific\>\""}]}], "]"}]}], 
+  ";"}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.880332003000127*^9, 3.880332118019813*^9}, {
+  3.880332282140332*^9, 3.880332324620846*^9}, {3.880406721182953*^9, 
+  3.88040673409459*^9}, {3.8820213096357822`*^9, 3.88202131358574*^9}, {
+  3.886543221787982*^9, 3.8865432220256977`*^9}},
+ CellLabel->"In[8]:=",ExpressionUUID->"14048c5d-9e48-4781-b072-3c4dd30b78ca"],
+
+Cell["Plot the ZNGIs and infeasible region:", "Text",
+ CellChangeTimes->{{3.882379126854622*^9, 
+  3.8823791337656403`*^9}},ExpressionUUID->"2a112400-9a28-43bb-86da-\
+47c1ea915c9e"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Dynamic", "@", 
+  RowBox[{"Show", "[", 
+   RowBox[{
+    RowBox[{"PFR", "[", 
+     RowBox[{"c", ",", "m", ",", "w"}], "]"}], ",", 
+    RowBox[{"RegionPlot", "[", 
+     RowBox[{
+      RowBox[{"RegionIntersection", "[", 
+       RowBox[{"Join", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{
+           RowBox[{"HalfSpace", "[", 
+            RowBox[{"#", ",", "1"}], "]"}], "&"}], "/@", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"w", " ", "#"}], "&"}], "/@", "c"}], ")"}], "/", "m"}],
+            ")"}]}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"HalfSpace", "[", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"-", "1"}], ",", "0"}], "}"}], ",", "0"}], "]"}], ",", 
+           
+           RowBox[{"HalfSpace", "[", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{"0", ",", 
+               RowBox[{"-", "1"}]}], "}"}], ",", "0"}], "]"}]}], "}"}]}], 
+        "]"}], "]"}], ",", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{
+         FractionBox["243", "255"], ",", 
+         FractionBox["242", "255"], ",", 
+         FractionBox["223", "255"]}], "]"}]}], ",", 
+      RowBox[{"BoundaryStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0.73", ",", "0.68", ",", "0.4"}], "]"}]}], ",", 
+      RowBox[{"PlotRange", "->", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"-", "3"}], ",", "3"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"-", "3"}], ",", "3"}], "}"}]}], "}"}]}]}], "]"}], ",", 
+    RowBox[{"Graphics", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"Thickness", "[", "0.01", "]"}], ",", 
+         RowBox[{"#", "[", 
+          RowBox[{"[", "1", "]"}], "]"}], ",", 
+         RowBox[{"Hyperplane", "[", 
+          RowBox[{
+           RowBox[{"#", "[", 
+            RowBox[{"[", "2", "]"}], "]"}], ",", "1"}], "]"}]}], "}"}], "&"}],
+       "/@", 
+      RowBox[{"Transpose", "[", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"PadRight", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             
+             TemplateBox[<|
+              "color" -> RGBColor[
+                0.9764705882352941, 0.6274509803921569, 0.24705882352941178`]|>,
+              "RGBColorSwatchTemplate"], ",", 
+             
+             TemplateBox[<|
+              "color" -> RGBColor[
+                0.4470588235294118, 0.6627450980392157, 0.5607843137254902]|>,
+              
+              "RGBColorSwatchTemplate"], ",", 
+             
+             TemplateBox[<|
+              "color" -> RGBColor[
+                0.6196078431372549, 0.35000000000000003`, 0.78]|>,
+              "RGBColorSwatchTemplate"], ",", 
+             
+             TemplateBox[<|
+              "color" -> RGBColor[0., 0.4117647058823529, 0.5372549019607843]|>,
+              "RGBColorSwatchTemplate"], ",", 
+             
+             TemplateBox[<|
+              "color" -> RGBColor[
+                0.8470588235294118, 0.06666666666666667, 
+                 0.34901960784313724`]|>,
+              "RGBColorSwatchTemplate"]}], "}"}], ",", 
+           RowBox[{"Length", "[", "m", "]"}], ",", "Black"}], "]"}], ",", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"w", " ", "#"}], "&"}], "/@", "c"}], ")"}], "/", "m"}]}],
+         "}"}], "]"}]}], "]"}], ",", 
+    RowBox[{"PlotRange", "->", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"0", ",", "3"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "3"}], "}"}]}], "}"}]}], ",", 
+    RowBox[{"FrameTicks", "->", "Automatic"}], ",", 
+    RowBox[{"FrameLabel", "->", 
+     RowBox[{"{", 
+      RowBox[{
+       TemplateBox[<|"boxes" -> FormBox[
+           SubscriptBox[
+            StyleBox["R", "TI"], "1"], TraditionalForm], "errors" -> {}, 
+         "input" -> "R_1", "state" -> "Boxes"|>,
+        "TeXAssistantTemplate"], ",", 
+       TemplateBox[<|"boxes" -> FormBox[
+           SubscriptBox[
+            StyleBox["R", "TI"], "2"], TraditionalForm], "errors" -> {}, 
+         "input" -> "R_2", "state" -> "Boxes"|>,
+        "TeXAssistantTemplate"]}], "}"}]}]}], "]"}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.880332120607683*^9, 3.8803321558796988`*^9}, {
+   3.880332186287889*^9, 3.880332336043*^9}, {3.880406741116865*^9, 
+   3.880406748620421*^9}, {3.882021316520892*^9, 3.882021330207844*^9}, {
+   3.882379135941884*^9, 3.882379145883503*^9}, 3.882380905684989*^9},
+ CellLabel->"In[9]:=",ExpressionUUID->"26bbf9bc-01c8-439b-931f-0632a253ef50"],
+
+Cell[BoxData[
+ DynamicBox[ToBoxes[
+   Show[
+    $CellContext`PFR[$CellContext`c, $CellContext`m, $CellContext`w], 
+    RegionPlot[
+     RegionIntersection[
+      Join[
+       Map[
+       HalfSpace[#, 1]& , 
+        Map[$CellContext`w #& , $CellContext`c]/$CellContext`m], {
+        HalfSpace[{-1, 0}, 0], 
+        HalfSpace[{0, -1}, 0]}]], PlotStyle -> 
+     RGBColor[243/255, 242/255, 223/255], BoundaryStyle -> 
+     RGBColor[0.73, 0.68, 0.4], PlotRange -> {{-3, 3}, {-3, 3}}], 
+    Graphics[
+     Map[{
+       Thickness[0.01], 
+       Part[#, 1], 
+       Hyperplane[
+        Part[#, 2], 1]}& , 
+      Transpose[{
+        PadRight[{
+          RGBColor[
+          0.9764705882352941, 0.6274509803921569, 0.24705882352941178`], 
+          RGBColor[
+          0.4470588235294118, 0.6627450980392157, 0.5607843137254902], 
+          RGBColor[0.6196078431372549, 0.35000000000000003`, 0.78], 
+          RGBColor[0., 0.4117647058823529, 0.5372549019607843], 
+          RGBColor[
+          0.8470588235294118, 0.06666666666666667, 0.34901960784313724`]}, 
+         Length[$CellContext`m], Black], 
+        Map[$CellContext`w #& , $CellContext`c]/$CellContext`m}]]], 
+    PlotRange -> {{0, 3}, {0, 3}}, FrameTicks -> Automatic, FrameLabel -> {
+      Subscript[$CellContext`R, 1], 
+      Subscript[$CellContext`R, 2]}], StandardForm],
+  ImageSizeCache->{360., {176., 180.}}]], "Output",
+ CellChangeTimes->{{3.880332220266795*^9, 3.880332337269849*^9}, {
+   3.8804067420736017`*^9, 3.880406748883061*^9}, 3.880461611650099*^9, {
+   3.880661895307172*^9, 3.880661906076973*^9}, 3.881779201431662*^9, 
+   3.8819779710742273`*^9, 3.8820213326164207`*^9, 3.8821964302966013`*^9, 
+   3.882379147165949*^9, 3.882380906357087*^9, {3.882381010313345*^9, 
+   3.882381030292343*^9}, 3.8823819017883472`*^9, 3.882972344267332*^9, 
+   3.883497892171089*^9, 3.885756109159231*^9, 3.885905438943739*^9, 
+   3.886543152321014*^9, {3.8865432200966043`*^9, 3.886543223952351*^9}, 
+   3.8865433200647287`*^9, 3.8865437458518667`*^9, 3.886544034788486*^9, 
+   3.8868643912924557`*^9, 3.886864969411213*^9, 3.886865592990494*^9, 
+   3.889447867405876*^9, {3.889448139690197*^9, 3.8894481568562937`*^9}},
+ CellLabel->"Out[9]=",ExpressionUUID->"8b6a3abe-ee4f-42fb-a0a0-dadd9e219035"]
+}, Open  ]],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"RR", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{
+      SubscriptBox["R", "\[Alpha]"], "[", "t", "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\[Alpha]", ",", "1", ",", 
+       RowBox[{"Length", "[", 
+        RowBox[{"c", "\[Transpose]"}], "]"}]}], "}"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"NN", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{
+      SubscriptBox["n", "i"], "[", "t", "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"i", ",", "1", ",", 
+       RowBox[{"Length", "[", "c", "]"}]}], "}"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"RR0", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     SubscriptBox["R0", "i"], ",", 
+     RowBox[{"{", 
+      RowBox[{"i", ",", "1", ",", 
+       RowBox[{"Length", "[", 
+        RowBox[{"c", "\[Transpose]"}], "]"}]}], "}"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"NN0", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     SubscriptBox["N0", "i"], ",", 
+     RowBox[{"{", 
+      RowBox[{"i", ",", "1", ",", 
+       RowBox[{"Length", "[", "c", "]"}]}], "}"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"KK", "=", 
+   RowBox[{"{", 
+    RowBox[{"K1", ",", "K2"}], "}"}]}], ";"}]}], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.8686242726272078`*^9, 3.868624280101191*^9}, 
+   3.869331527038226*^9, {3.880331972150976*^9, 3.880331974275766*^9}},
+ CellLabel->"In[10]:=",ExpressionUUID->"435a3769-693b-4323-8033-68a689b17fc6"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"MCRMdiffEqs", "[", 
+    RowBox[{"c_", ",", "m_", ",", "w_"}], "]"}], ":=", 
+   RowBox[{"ParametricNDSolveValue", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"Thread", "[", 
+        RowBox[{
+         RowBox[{"D", "[", 
+          RowBox[{"NN", ",", "t"}], "]"}], "==", 
+         RowBox[{"NN", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"c", ".", 
+             RowBox[{"(", 
+              RowBox[{"w", " ", "RR"}], ")"}]}], "-", "m"}], ")"}]}]}], "]"}],
+        ",", "\[IndentingNewLine]", 
+       RowBox[{"Thread", "[", 
+        RowBox[{
+         RowBox[{"D", "[", 
+          RowBox[{"RR", ",", "t"}], "]"}], "==", 
+         RowBox[{"RR", 
+          RowBox[{"(", 
+           RowBox[{"KK", "-", "RR", "-", 
+            RowBox[{"NN", ".", "c"}]}], ")"}]}]}], "]"}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"Thread", "[", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"NN", "/.", 
+           RowBox[{"t", "->", "0"}]}], ")"}], "==", "NN0"}], "]"}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"Thread", "[", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"RR", "/.", 
+           RowBox[{"t", "->", "0"}]}], ")"}], "==", "RR0"}], "]"}]}], "}"}], 
+     ",", 
+     RowBox[{"(", 
+      RowBox[{"Flatten", "@", 
+       RowBox[{"{", 
+        RowBox[{"RR", ",", "NN"}], "}"}]}], ")"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"t", ",", "0", ",", "200"}], "}"}], ",", 
+     RowBox[{"Flatten", "@", 
+      RowBox[{"{", 
+       RowBox[{"KK", ",", "RR0", ",", "NN0"}], "}"}]}]}], "]"}]}], 
+  ";"}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.868624284346951*^9, 3.868624290139133*^9}, {
+   3.8693337531616488`*^9, 3.8693337532608643`*^9}, {3.8693338305484858`*^9, 
+   3.869333830618875*^9}, {3.869334051970694*^9, 3.8693340521421967`*^9}, {
+   3.869334369708055*^9, 3.86933438628344*^9}, {3.8739179431302156`*^9, 
+   3.873917943465495*^9}, 3.880331975403777*^9, 3.8803321064063597`*^9, {
+   3.880406824652466*^9, 3.880406829497212*^9}, {3.880406910952167*^9, 
+   3.880406931008729*^9}, {3.880408942392763*^9, 3.880408943063031*^9}, {
+   3.880409167340282*^9, 3.880409188157743*^9}, {3.880409310678631*^9, 
+   3.880409329089621*^9}, 3.880409375446809*^9, {3.880409426645845*^9, 
+   3.88040942705306*^9}, {3.882021351359684*^9, 3.882021356096962*^9}, {
+   3.882026120671876*^9, 3.882026133029414*^9}},
+ CellLabel->"In[15]:=",ExpressionUUID->"406c36d3-dae8-4a52-a38f-8b3f9f4f1d3d"],
+
+Cell[TextData[{
+ "Click and drag the locator to adjust the value of ",
+ Cell[BoxData[
+  FormBox[
+   TemplateBox[<|"boxes" -> FormBox[
+       StyleBox["K", FontSlant -> "Bold"], TraditionalForm], "errors" -> {}, 
+     "input" -> "\\mathbf K", "state" -> "Boxes"|>,
+    "TeXAssistantTemplate"], TraditionalForm]],ExpressionUUID->
+  "c775ed8f-6d06-4b12-940b-886302c3b653"],
+ ":"
+}], "Text",
+ CellChangeTimes->{{3.882379155910501*^9, 
+  3.8823791744379396`*^9}},ExpressionUUID->"2458f631-8ba7-4461-83f8-\
+7ccba6ea2efe"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"DynamicModule", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"K", "=", 
+     RowBox[{"{", 
+      RowBox[{"1", ",", "1"}], "}"}]}], "}"}], ",", "\[IndentingNewLine]", 
+   RowBox[{"LocatorPane", "[", 
+    RowBox[{
+     RowBox[{"Dynamic", "[", "K", "]"}], ",", 
+     RowBox[{"Dynamic", "@", 
+      RowBox[{"Block", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"MCRMResults", "=", 
+           RowBox[{"MCRMQPPositive", "[", 
+            RowBox[{"K", ",", "c", ",", "m", ",", "w"}], "]"}]}], ",", 
+          RowBox[{"MCRMdiffEqsResults", "=", 
+           RowBox[{
+            RowBox[{"MCRMdiffEqs", "[", 
+             RowBox[{"c", ",", "m", ",", "w"}], "]"}], "@@", 
+            RowBox[{"Join", "[", 
+             RowBox[{"K", ",", "K", ",", 
+              RowBox[{"ConstantArray", "[", 
+               RowBox[{"0.5", ",", 
+                RowBox[{"First", "@", 
+                 RowBox[{"Dimensions", "[", "c", "]"}]}]}], "]"}]}], 
+             "]"}]}]}]}], "}"}], ",", "\[IndentingNewLine]", 
+        RowBox[{"Show", "[", 
+         RowBox[{
+          RowBox[{"{", "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"PFR", "[", 
+             RowBox[{"c", ",", "m", ",", "w"}], "]"}], ",", 
+            "\[IndentingNewLine]", 
+            RowBox[{"Graphics", "[", 
+             RowBox[{"{", "\[IndentingNewLine]", 
+              RowBox[{
+               RowBox[{"PointSize", "[", "Large", "]"}], ",", 
+               RowBox[{"Point", "[", 
+                RowBox[{"{", 
+                 RowBox[{"MCRMResults", "[", 
+                  RowBox[{"[", "1", "]"}], "]"}], "}"}], "]"}], ",", 
+               RowBox[{"FaceForm", "[", 
+                RowBox[{"{", 
+                 RowBox[{
+                  RowBox[{"Opacity", "[", "0.6", "]"}], ",", 
+                  TemplateBox[<|"color" -> RGBColor[0.59, 0.89, 0.51]|>,
+                   "RGBColorSwatchTemplate"]}], "}"}], "]"}], ",", 
+               RowBox[{"EdgeForm", "[", "None", "]"}], ",", 
+               RowBox[{"Thickness", "[", 
+                SuperscriptBox["10", 
+                 RowBox[{"-", "10"}]], "]"}], ",", "\[IndentingNewLine]", 
+               RowBox[{"ConicHullRegion", "[", 
+                RowBox[{
+                 RowBox[{"{", 
+                  RowBox[{"MCRMResults", "[", 
+                   RowBox[{"[", "1", "]"}], "]"}], "}"}], ",", 
+                 "\[IndentingNewLine]", 
+                 RowBox[{
+                  RowBox[{"(", 
+                   RowBox[{"(", "c", ")"}], ")"}], "[", 
+                  RowBox[{"[", 
+                   RowBox[{"Flatten", "@", 
+                    RowBox[{"Position", "[", 
+                    RowBox[{
+                    RowBox[{"MCRMResults", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}], ",", 
+                    RowBox[{"_", "?", 
+                    RowBox[{"(", 
+                    RowBox[{"GreaterThan", "[", 
+                    SuperscriptBox["10", 
+                    RowBox[{"-", "8"}]], "]"}], ")"}]}]}], "]"}]}], "]"}], 
+                  "]"}]}], "]"}]}], "\[IndentingNewLine]", "}"}], "]"}], ",", 
+            "\[IndentingNewLine]", 
+            RowBox[{"ParametricPlot", "[", 
+             RowBox[{
+              RowBox[{"MCRMdiffEqsResults", "[", 
+               RowBox[{"[", 
+                RowBox[{"1", ";;", 
+                 RowBox[{"Last", "@", 
+                  RowBox[{"Dimensions", "[", "c", "]"}]}]}], "]"}], "]"}], 
+              ",", 
+              RowBox[{"{", 
+               RowBox[{"t", ",", "0", ",", "200"}], "}"}]}], "]"}]}], 
+           "\[IndentingNewLine]", "}"}], ",", 
+          RowBox[{"PlotRange", "->", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{"0", ",", "3"}], "}"}], ",", 
+             RowBox[{"{", 
+              RowBox[{"0", ",", "3"}], "}"}]}], "}"}]}], ",", 
+          RowBox[{"FrameLabel", "->", 
+           RowBox[{"{", 
+            RowBox[{
+             TemplateBox[<|"boxes" -> FormBox[
+                 RowBox[{"\[Alpha]", "\[LongEqual]", "1"}], TraditionalForm], 
+               "errors" -> {}, "input" -> "\\alpha=1", "state" -> "Boxes"|>,
+              "TeXAssistantTemplate"], ",", 
+             TemplateBox[<|"boxes" -> FormBox[
+                 RowBox[{"\[Alpha]", "\[LongEqual]", "2"}], TraditionalForm], 
+               "errors" -> {}, "input" -> "\\alpha=2", "state" -> "Boxes"|>,
+              "TeXAssistantTemplate"]}], "}"}]}], ",", 
+          RowBox[{"Epilog", "->", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"PointSize", "[", "0.03", "]"}], ",", 
+             RowBox[{"Point", "[", 
+              RowBox[{"{", 
+               RowBox[{"2.5", ",", "2.8"}], "}"}], "]"}], ",", 
+             RowBox[{"Text", "[", 
+              RowBox[{
+               RowBox[{"Style", "[", 
+                RowBox[{
+                 TemplateBox[<|"boxes" -> FormBox[
+                    SuperscriptBox[
+                    StyleBox["R", "TI"], "\[FivePointedStar]"], 
+                    TraditionalForm], "errors" -> {}, "input" -> "R^\\star", 
+                   "state" -> "Boxes"|>,
+                  "TeXAssistantTemplate"], ",", 
+                 RowBox[{"FontFamily", "->", "\"\<CMU Classical Serif\>\""}], 
+                 ",", 
+                 RowBox[{"FontSize", "->", "16"}]}], "]"}], ",", 
+               RowBox[{"{", 
+                RowBox[{"2.74", ",", "2.8"}], "}"}]}], "]"}], ",", 
+             RowBox[{"Locator", "[", 
+              RowBox[{"{", 
+               RowBox[{"2.5", ",", "2.6"}], "}"}], "]"}], ",", 
+             RowBox[{"Text", "[", 
+              RowBox[{
+               RowBox[{"Style", "[", 
+                RowBox[{"\"\<\!\(\*TemplateBox[<|\"boxes\" -> FormBox[
+StyleBox[\"K\", FontSlant -> \"Bold\"], TraditionalForm], \"errors\" -> {}, \
+\"input\" -> \"\\\\mathbf K\", \"state\" -> \
+\"Boxes\"|>,\"TeXAssistantTemplate\"]\)\>\"", ",", 
+                 RowBox[{"FontFamily", "->", "\"\<CMU Classical Serif\>\""}], 
+                 ",", 
+                 RowBox[{"FontSize", "->", "16"}]}], "]"}], ",", 
+               RowBox[{"{", 
+                RowBox[{"2.7", ",", "2.6"}], "}"}]}], "]"}], ",", 
+             "\[IndentingNewLine]", 
+             RowBox[{"Text", "[", 
+              RowBox[{
+               RowBox[{"Style", "[", 
+                RowBox[{
+                 TemplateBox[<|"boxes" -> FormBox[
+                    RowBox[{
+                    StyleBox["R", FontSlant -> "Bold"], "(", 
+                    StyleBox["t", "TI"], ")"}], TraditionalForm], 
+                   "errors" -> {}, "input" -> "\\mathbf R(t)", "state" -> 
+                   "Boxes"|>,
+                  "TeXAssistantTemplate"], ",", 
+                 RowBox[{"FontFamily", "->", "\"\<CMU Classical Serif\>\""}], 
+                 ",", 
+                 RowBox[{"FontSize", "->", "16"}]}], "]"}], ",", 
+               RowBox[{"{", 
+                RowBox[{"2.76", ",", "2.4"}], "}"}]}], "]"}], ",", 
+             "\[IndentingNewLine]", 
+             RowBox[{
+              RowBox[{"ColorData", "[", 
+               RowBox[{"97", ",", "\"\<ColorList\>\""}], "]"}], "[", 
+              RowBox[{"[", "1", "]"}], "]"}], ",", "Thick", ",", 
+             RowBox[{"Line", "[", 
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"{", 
+                 RowBox[{"2.45", ",", "2.4"}], "}"}], ",", 
+                RowBox[{"{", 
+                 RowBox[{"2.55", ",", "2.4"}], "}"}]}], "}"}], "]"}]}], 
+            "\[IndentingNewLine]", "}"}]}]}], "]"}]}], "\[IndentingNewLine]", 
+       "]"}]}]}], "]"}]}], "\[IndentingNewLine]", "]"}]], "Input",
+ CellChangeTimes->{{3.8804095688712997`*^9, 3.880409715919251*^9}, {
+   3.8804097911790667`*^9, 3.880409903555297*^9}, {3.880410166560822*^9, 
+   3.88041017228868*^9}, {3.880461661580604*^9, 3.88046170952055*^9}, {
+   3.880461831136457*^9, 3.880461914701847*^9}, {3.880461960752997*^9, 
+   3.880462028049209*^9}, {3.880462122885828*^9, 3.880462184616589*^9}, {
+   3.880462217461782*^9, 3.880462260069282*^9}, {3.882021511381773*^9, 
+   3.8820215343119707`*^9}, {3.882021804917553*^9, 3.882021805222186*^9}, {
+   3.882021931948463*^9, 3.8820219612232018`*^9}, 3.882022032466544*^9, {
+   3.8823786154899263`*^9, 3.8823786275658073`*^9}, {3.882379210086747*^9, 
+   3.882379210307467*^9}, {3.882379250375643*^9, 3.8823792534118013`*^9}, {
+   3.8823792982314453`*^9, 3.882379318283392*^9}},
+ CellLabel->"In[24]:=",ExpressionUUID->"c3c7fc6c-c891-479e-ae5c-f76cd6a410d6"],
+
+Cell[BoxData[
+ DynamicModuleBox[{K$$ = {1.246, 2.3000000000000003`}}, 
+  LocatorPaneBox[Dynamic[K$$], 
+   DynamicBox[ToBoxes[
+     Block[{$CellContext`MCRMResults = $CellContext`MCRMQPPositive[
+        K$$, $CellContext`c, $CellContext`m, $CellContext`w], \
+$CellContext`MCRMdiffEqsResults = Apply[
+         $CellContext`MCRMdiffEqs[$CellContext`c, $CellContext`m, \
+$CellContext`w], 
+         Join[K$$, K$$, 
+          ConstantArray[0.5, 
+           First[
+            Dimensions[$CellContext`c]]]]]}, 
+      Show[{
+        $CellContext`PFR[$CellContext`c, $CellContext`m, $CellContext`w], 
+        Graphics[{
+          PointSize[Large], 
+          Point[{
+            Part[$CellContext`MCRMResults, 1]}], 
+          FaceForm[{
+            Opacity[0.6], 
+            RGBColor[0.59, 0.89, 0.51]}], 
+          EdgeForm[None], 
+          Thickness[10^(-10)], 
+          ConicHullRegion[{
+            Part[$CellContext`MCRMResults, 1]}, 
+           Part[$CellContext`c, 
+            Flatten[
+             Position[
+              Part[$CellContext`MCRMResults, 2], 
+              PatternTest[
+               Blank[], 
+               GreaterThan[10^(-8)]]]]]]}], 
+        ParametricPlot[
+         Part[$CellContext`MCRMdiffEqsResults, 
+          Span[1, 
+           Last[
+            Dimensions[$CellContext`c]]]], {$CellContext`t, 0, 200}]}, 
+       PlotRange -> {{0, 3}, {0, 3}}, 
+       FrameLabel -> {$CellContext`\[Alpha] == 1, $CellContext`\[Alpha] == 2},
+        Epilog -> {
+         PointSize[0.03], 
+         Point[{2.5, 2.8}], 
+         Text[
+          
+          Style[$CellContext`R^$CellContext`\[FivePointedStar], FontFamily -> 
+           "CMU Classical Serif", FontSize -> 16], {2.74, 2.8}], 
+         Locator[{2.5, 2.6}], 
+         Text[
+          Style[
+          "\!\(\*TemplateBox[<|\"boxes\" -> FormBox[StyleBox[\"K\", FontSlant \
+-> \"Bold\"], TraditionalForm], \"errors\" -> {}, \"input\" -> \"\\\\mathbf K\
+\", \"state\" -> \"Boxes\"|>,\"TeXAssistantTemplate\"]\)", FontFamily -> 
+           "CMU Classical Serif", FontSize -> 16], {2.7, 2.6}], 
+         Text[
+          Style[
+           $CellContext`R[$CellContext`t], FontFamily -> 
+           "CMU Classical Serif", FontSize -> 16], {2.76, 2.4}], 
+         Part[
+          ColorData[97, "ColorList"], 1], Thick, 
+         Line[{{2.45, 2.4}, {2.55, 2.4}}]}]], StandardForm],
+    ImageSizeCache->{360., {176., 180.}}]],
+  DynamicModuleValues:>{}]], "Output",
+ CellChangeTimes->{{3.880409843333276*^9, 3.8804098854503098`*^9}, {
+   3.8804101567154007`*^9, 3.880410169228799*^9}, {3.8804616367888727`*^9, 
+   3.880461679006781*^9}, 3.88046170977363*^9, 3.880461856827286*^9, {
+   3.880461889579792*^9, 3.880461914902548*^9}, 3.8804619610028753`*^9, {
+   3.880461998903308*^9, 3.880462033688076*^9}, {3.880462126323806*^9, 
+   3.880462184863482*^9}, {3.880462256284338*^9, 3.880462260343154*^9}, {
+   3.8806618958294573`*^9, 3.88066190628863*^9}, 3.881779204305089*^9, 
+   3.881977977488469*^9, 3.8820215360857277`*^9, 3.882021590480651*^9, 
+   3.882021659430174*^9, 3.882021762449306*^9, 3.8820218061503773`*^9, {
+   3.8820219324828243`*^9, 3.8820219619409533`*^9}, 3.8820220328672523`*^9, 
+   3.882378628941555*^9, 3.882379210951811*^9, {3.882379298731648*^9, 
+   3.882379341254553*^9}, 3.882380913222535*^9, {3.882381010653295*^9, 
+   3.88238103127766*^9}, 3.8823819025780697`*^9, 3.88297234521063*^9, 
+   3.883497893063032*^9, 3.885756110108704*^9, 3.885905439085258*^9, 
+   3.886543153666424*^9, 3.88686439302838*^9, 3.886864970687064*^9, 
+   3.8868656079286127`*^9},
+ CellLabel->"Out[24]=",ExpressionUUID->"bb42aedc-763d-4f40-bb65-e3e8e1701559"]
+}, Open  ]],
+
+Cell["Below, you can manipulate everything at once:", "Text",
+ CellChangeTimes->{{3.886866266761899*^9, 
+  3.886866271218075*^9}},ExpressionUUID->"68da97f0-4dd1-4cf4-86ca-\
+bd6d6973b3a7"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"DynamicModule", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"K", "=", 
+     RowBox[{"{", 
+      RowBox[{"1", ",", "1"}], "}"}]}], "}"}], ",", 
+   RowBox[{"Dynamic", "@", 
+    RowBox[{"Block", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"MCRMResults", "=", 
+         RowBox[{"MCRMQPPositive", "[", 
+          RowBox[{"K", ",", "c", ",", "m", ",", "w"}], "]"}]}], ",", 
+        RowBox[{"MCRMdiffEqsResults", "=", 
+         RowBox[{
+          RowBox[{"MCRMdiffEqs", "[", 
+           RowBox[{"c", ",", "m", ",", "w"}], "]"}], "@@", 
+          RowBox[{"Join", "[", 
+           RowBox[{"K", ",", "K", ",", 
+            RowBox[{"ConstantArray", "[", 
+             RowBox[{"0.5", ",", 
+              RowBox[{"First", "@", 
+               RowBox[{"Dimensions", "[", "c", "]"}]}]}], "]"}]}], 
+           "]"}]}]}]}], "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"Deploy", "@", 
+       RowBox[{"Column", "[", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"Show", "[", 
+           RowBox[{
+            RowBox[{"{", "\[IndentingNewLine]", 
+             RowBox[{
+              RowBox[{"PFR", "[", 
+               RowBox[{"c", ",", "m", ",", "w"}], "]"}], ",", 
+              "\[IndentingNewLine]", 
+              RowBox[{"Graphics", "[", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"Locator", "[", 
+                  RowBox[{"Dynamic", "[", "K", "]"}], "]"}], ",", 
+                 "\[IndentingNewLine]", 
+                 RowBox[{"PointSize", "[", "Large", "]"}], ",", 
+                 RowBox[{"Point", "[", 
+                  RowBox[{"{", 
+                   RowBox[{"MCRMResults", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "}"}], "]"}], ",", 
+                 RowBox[{"FaceForm", "[", 
+                  RowBox[{"{", 
+                   RowBox[{
+                    RowBox[{"Opacity", "[", "0.6", "]"}], ",", 
+                    TemplateBox[<|"color" -> RGBColor[0.59, 0.89, 0.51]|>,
+                    "RGBColorSwatchTemplate"]}], "}"}], "]"}], ",", 
+                 RowBox[{"EdgeForm", "[", "None", "]"}], ",", 
+                 RowBox[{"Thickness", "[", 
+                  SuperscriptBox["10", 
+                   RowBox[{"-", "10"}]], "]"}], ",", "\[IndentingNewLine]", 
+                 RowBox[{"ConicHullRegion", "[", 
+                  RowBox[{
+                   RowBox[{"{", 
+                    RowBox[{"MCRMResults", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "}"}], ",", 
+                   RowBox[{"c", "[", 
+                    RowBox[{"[", 
+                    RowBox[{"Flatten", "@", 
+                    RowBox[{"Position", "[", 
+                    RowBox[{
+                    RowBox[{"MCRMResults", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}], ",", 
+                    RowBox[{"_", "?", 
+                    RowBox[{"(", 
+                    RowBox[{"GreaterThan", "[", 
+                    SuperscriptBox["10", 
+                    RowBox[{"-", "8"}]], "]"}], ")"}]}]}], "]"}]}], "]"}], 
+                    "]"}]}], "]"}]}], "\[IndentingNewLine]", "}"}], "]"}], 
+              ",", "\[IndentingNewLine]", 
+              RowBox[{"ParametricPlot", "[", 
+               RowBox[{
+                RowBox[{"MCRMdiffEqsResults", "[", 
+                 RowBox[{"[", 
+                  RowBox[{"1", ";;", 
+                   RowBox[{"Last", "@", 
+                    RowBox[{"Dimensions", "[", "c", "]"}]}]}], "]"}], "]"}], 
+                ",", 
+                RowBox[{"{", 
+                 RowBox[{"t", ",", "0", ",", "200"}], "}"}], ",", 
+                RowBox[{"PlotStyle", "->", 
+                 RowBox[{
+                  RowBox[{"ColorData", "[", 
+                   RowBox[{"97", ",", "\"\<ColorList\>\""}], "]"}], "[", 
+                  RowBox[{"[", "1", "]"}], "]"}]}]}], "]"}]}], 
+             "\[IndentingNewLine]", "}"}], ",", 
+            RowBox[{"PlotRange", "->", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{"0", ",", "3"}], "}"}], ",", 
+               RowBox[{"{", 
+                RowBox[{"0", ",", "3"}], "}"}]}], "}"}]}], ",", 
+            RowBox[{"ImageSize", "->", "300"}], ",", 
+            RowBox[{"FrameLabel", "->", 
+             RowBox[{"{", 
+              RowBox[{
+               TemplateBox[<|"boxes" -> FormBox[
+                   RowBox[{"\[Alpha]", "\[LongEqual]", "1"}], 
+                   TraditionalForm], "errors" -> {}, "input" -> "\\alpha=1", 
+                 "state" -> "Boxes"|>,
+                "TeXAssistantTemplate"], ",", 
+               TemplateBox[<|"boxes" -> FormBox[
+                   RowBox[{"\[Alpha]", "\[LongEqual]", "2"}], 
+                   TraditionalForm], "errors" -> {}, "input" -> "\\alpha=2", 
+                 "state" -> "Boxes"|>,
+                "TeXAssistantTemplate"]}], "}"}]}], ",", 
+            RowBox[{"Epilog", "->", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"PointSize", "[", "0.03", "]"}], ",", 
+               RowBox[{"Point", "[", 
+                RowBox[{"{", 
+                 RowBox[{"2.5", ",", "2.8"}], "}"}], "]"}], ",", 
+               RowBox[{"Text", "[", 
+                RowBox[{
+                 RowBox[{"Style", "[", 
+                  RowBox[{
+                   TemplateBox[<|"boxes" -> FormBox[
+                    SuperscriptBox[
+                    StyleBox["R", "TI"], "\[FivePointedStar]"], 
+                    TraditionalForm], "errors" -> {}, "input" -> "R^\\star", 
+                    "state" -> "Boxes"|>,
+                    "TeXAssistantTemplate"], ",", 
+                   RowBox[{
+                   "FontFamily", "->", "\"\<CMU Classical Serif\>\""}], ",", 
+                   RowBox[{"FontSize", "->", "16"}]}], "]"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{"2.74", ",", "2.8"}], "}"}]}], "]"}], ",", 
+               RowBox[{"Locator", "[", 
+                RowBox[{"{", 
+                 RowBox[{"2.5", ",", "2.6"}], "}"}], "]"}], ",", 
+               RowBox[{"Text", "[", 
+                RowBox[{
+                 RowBox[{"Style", "[", 
+                  RowBox[{"\"\<\!\(\*TemplateBox[<|\"boxes\" -> FormBox[
+StyleBox[\"K\", FontSlant -> \"Bold\"], TraditionalForm], \"errors\" -> {}, \
+\"input\" -> \"\\\\mathbf K\", \"state\" -> \
+\"Boxes\"|>,\"TeXAssistantTemplate\"]\)\>\"", ",", 
+                   RowBox[{
+                   "FontFamily", "->", "\"\<CMU Classical Serif\>\""}], ",", 
+                   RowBox[{"FontSize", "->", "16"}]}], "]"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{"2.7", ",", "2.6"}], "}"}]}], "]"}], ",", 
+               "\[IndentingNewLine]", 
+               RowBox[{"Text", "[", 
+                RowBox[{
+                 RowBox[{"Style", "[", 
+                  RowBox[{
+                   TemplateBox[<|"boxes" -> FormBox[
+                    RowBox[{
+                    StyleBox["R", FontSlant -> "Bold"], "(", 
+                    StyleBox["t", "TI"], ")"}], TraditionalForm], 
+                    "errors" -> {}, "input" -> "\\mathbf R(t)", "state" -> 
+                    "Boxes"|>,
+                    "TeXAssistantTemplate"], ",", 
+                   RowBox[{
+                   "FontFamily", "->", "\"\<CMU Classical Serif\>\""}], ",", 
+                   RowBox[{"FontSize", "->", "16"}]}], "]"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{"2.76", ",", "2.4"}], "}"}]}], "]"}], ",", 
+               "\[IndentingNewLine]", 
+               RowBox[{
+                RowBox[{"ColorData", "[", 
+                 RowBox[{"97", ",", "\"\<ColorList\>\""}], "]"}], "[", 
+                RowBox[{"[", "1", "]"}], "]"}], ",", "Thick", ",", 
+               RowBox[{"Line", "[", 
+                RowBox[{"{", 
+                 RowBox[{
+                  RowBox[{"{", 
+                   RowBox[{"2.45", ",", "2.4"}], "}"}], ",", 
+                  RowBox[{"{", 
+                   RowBox[{"2.55", ",", "2.4"}], "}"}]}], "}"}], "]"}]}], 
+              "\[IndentingNewLine]", "}"}]}]}], "]"}], "\[IndentingNewLine]", 
+          ",", 
+          RowBox[{"Plot", "[", 
+           RowBox[{
+            RowBox[{"Evaluate", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"Table", "[", 
+                RowBox[{
+                 RowBox[{"Callout", "[", 
+                  RowBox[{
+                   RowBox[{"#", "[", 
+                    RowBox[{"[", "i", "]"}], "]"}], ",", 
+                   RowBox[{"Style", "[", 
+                    RowBox[{
+                    RowBox[{"\"\<i=\>\"", "<>", 
+                    RowBox[{"ToString", "[", "i", "]"}]}], ",", 
+                    RowBox[{"FontFamily", "->", "\"\<CMU Serif\>\""}], ",", 
+                    RowBox[{"FontSlant", "->", "Italic"}]}], "]"}], ",", 
+                   RowBox[{"LabelStyle", "\[Rule]", 
+                    RowBox[{"{", 
+                    RowBox[{"Bold", ",", 
+                    RowBox[{"FontSize", "->", "14"}]}], "}"}]}]}], "]"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{"i", ",", "1", ",", 
+                   RowBox[{"Length", "[", "m", "]"}]}], "}"}]}], "]"}], "&"}],
+               "@", 
+              RowBox[{"(", 
+               RowBox[{"MCRMdiffEqsResults", "[", 
+                RowBox[{"[", 
+                 RowBox[{
+                  RowBox[{"(", 
+                   RowBox[{
+                    RowBox[{"Last", "@", 
+                    RowBox[{"Dimensions", "[", "c", "]"}]}], "+", "1"}], 
+                   ")"}], ";;"}], "]"}], "]"}], ")"}]}], "]"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"t", ",", "0", ",", "100"}], "}"}], ",", 
+            RowBox[{"ImageSize", "->", "360"}], ",", 
+            RowBox[{"AspectRatio", "->", 
+             RowBox[{"1", "/", "2"}]}], ",", 
+            RowBox[{"PlotStyle", "->", 
+             RowBox[{"PadRight", "[", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{
+                 
+                 TemplateBox[<|
+                  "color" -> 
+                   RGBColor[
+                    0.9764705882352941, 0.6274509803921569, 
+                    0.24705882352941178`]|>,
+                  "RGBColorSwatchTemplate"], ",", 
+                 
+                 TemplateBox[<|
+                  "color" -> 
+                   RGBColor[
+                    0.4470588235294118, 0.6627450980392157, 
+                    0.5607843137254902]|>,
+                  "RGBColorSwatchTemplate"], ",", 
+                 
+                 TemplateBox[<|
+                  "color" -> 
+                   RGBColor[0.6196078431372549, 0.35000000000000003`, 0.78]|>,
+                  
+                  "RGBColorSwatchTemplate"], ",", 
+                 
+                 TemplateBox[<|
+                  "color" -> 
+                   RGBColor[0., 0.4117647058823529, 0.5372549019607843]|>,
+                  "RGBColorSwatchTemplate"], ",", 
+                 
+                 TemplateBox[<|
+                  "color" -> 
+                   RGBColor[
+                    0.8470588235294118, 0.06666666666666667, 
+                    0.34901960784313724`]|>,
+                  "RGBColorSwatchTemplate"]}], "}"}], ",", 
+               RowBox[{"Length", "[", "m", "]"}], ",", "Black"}], "]"}]}], 
+            ",", 
+            RowBox[{"PlotRange", "->", 
+             RowBox[{"{", 
+              RowBox[{"0", ",", "All"}], "}"}]}], ",", 
+            RowBox[{"FrameLabel", "->", 
+             RowBox[{"{", 
+              RowBox[{
+               TemplateBox[<|"boxes" -> FormBox[
+                   StyleBox["t", "TI"], TraditionalForm], "errors" -> {}, 
+                 "input" -> "t", "state" -> "Boxes"|>,
+                "TeXAssistantTemplate"], ",", 
+               TemplateBox[<|"boxes" -> FormBox[
+                   SubscriptBox[
+                    StyleBox["N", "TI"], 
+                    StyleBox["i", "TI"]], TraditionalForm], "errors" -> {}, 
+                 "input" -> "N_i", "state" -> "Boxes"|>,
+                "TeXAssistantTemplate"]}], "}"}]}]}], "]"}]}], "}"}], 
+        "]"}]}]}], "]"}]}]}], "\[IndentingNewLine]", "]"}]], "Input",
+ CellChangeTimes->{{3.88040992051924*^9, 3.880409978844554*^9}, {
+   3.880410012187402*^9, 3.880410070008009*^9}, {3.880410145915038*^9, 
+   3.8804101535946693`*^9}, {3.880410188291876*^9, 3.880410231867442*^9}, {
+   3.880410289632394*^9, 3.8804103553631983`*^9}, 3.880410408663006*^9, {
+   3.880410598636503*^9, 3.880410646661749*^9}, {3.880410756089346*^9, 
+   3.880410842169508*^9}, {3.8804624114977417`*^9, 3.88046251298273*^9}, 
+   3.880462989247373*^9, {3.880463235379354*^9, 3.880463264261346*^9}, {
+   3.880463297765421*^9, 3.88046335995844*^9}, {3.8807192991220512`*^9, 
+   3.880719301997225*^9}, {3.882022086046769*^9, 3.8820220997565002`*^9}, {
+   3.882378644938507*^9, 3.8823786687100697`*^9}, {3.8823793488119297`*^9, 
+   3.882379437621953*^9}, {3.882380916609948*^9, 3.882380919479039*^9}, {
+   3.885756220883162*^9, 3.885756402866777*^9}, {3.8857672134002657`*^9, 
+   3.885767242251598*^9}, {3.886865674984097*^9, 3.886865680000746*^9}},
+ CellLabel->"In[26]:=",ExpressionUUID->"1d10156d-30bc-4acd-8479-90e4ba6ee4fb"],
+
+Cell[BoxData[
+ DynamicModuleBox[{K$$ = {1.2915966890595076`, 2.6719349808061144`}}, 
+  DynamicBox[ToBoxes[
+    Block[{$CellContext`MCRMResults = $CellContext`MCRMQPPositive[
+       K$$, $CellContext`c, $CellContext`m, $CellContext`w], \
+$CellContext`MCRMdiffEqsResults = Apply[
+        $CellContext`MCRMdiffEqs[$CellContext`c, $CellContext`m, \
+$CellContext`w], 
+        Join[K$$, K$$, 
+         ConstantArray[0.5, 
+          First[
+           Dimensions[$CellContext`c]]]]]}, 
+     Deploy[
+      Column[{
+        Show[{
+          $CellContext`PFR[$CellContext`c, $CellContext`m, $CellContext`w], 
+          Graphics[{
+            Locator[
+             Dynamic[K$$]], 
+            PointSize[Large], 
+            Point[{
+              Part[$CellContext`MCRMResults, 1]}], 
+            FaceForm[{
+              Opacity[0.6], 
+              RGBColor[0.59, 0.89, 0.51]}], 
+            EdgeForm[None], 
+            Thickness[10^(-10)], 
+            ConicHullRegion[{
+              Part[$CellContext`MCRMResults, 1]}, 
+             Part[$CellContext`c, 
+              Flatten[
+               Position[
+                Part[$CellContext`MCRMResults, 2], 
+                PatternTest[
+                 Blank[], 
+                 GreaterThan[10^(-8)]]]]]]}], 
+          ParametricPlot[
+           Part[$CellContext`MCRMdiffEqsResults, 
+            Span[1, 
+             Last[
+              Dimensions[$CellContext`c]]]], {$CellContext`t, 0, 200}, 
+           PlotStyle -> Part[
+             ColorData[97, "ColorList"], 1]]}, PlotRange -> {{0, 3}, {0, 3}}, 
+         ImageSize -> 300, 
+         FrameLabel -> {$CellContext`\[Alpha] == 1, $CellContext`\[Alpha] == 
+           2}, Epilog -> {
+           PointSize[0.03], 
+           Point[{2.5, 2.8}], 
+           Text[
+            
+            Style[$CellContext`R^$CellContext`\[FivePointedStar], FontFamily -> 
+             "CMU Classical Serif", FontSize -> 16], {2.74, 2.8}], 
+           Locator[{2.5, 2.6}], 
+           Text[
+            Style[
+            "\!\(\*TemplateBox[<|\"boxes\" -> FormBox[StyleBox[\"K\", \
+FontSlant -> \"Bold\"], TraditionalForm], \"errors\" -> {}, \"input\" -> \"\\\
+\\mathbf K\", \"state\" -> \"Boxes\"|>,\"TeXAssistantTemplate\"]\)", 
+             FontFamily -> "CMU Classical Serif", FontSize -> 16], {2.7, 
+            2.6}], 
+           Text[
+            Style[
+             $CellContext`R[$CellContext`t], FontFamily -> 
+             "CMU Classical Serif", FontSize -> 16], {2.76, 2.4}], 
+           Part[
+            ColorData[97, "ColorList"], 1], Thick, 
+           Line[{{2.45, 2.4}, {2.55, 2.4}}]}], 
+        Plot[
+         Evaluate[
+          (Table[
+           Callout[
+            Part[#, $CellContext`i], 
+            Style[
+            "i=" <> ToString[$CellContext`i], FontFamily -> "CMU Serif", 
+             FontSlant -> Italic], 
+            LabelStyle -> {Bold, FontSize -> 14}], {$CellContext`i, 1, 
+            Length[$CellContext`m]}]& )[
+           Part[$CellContext`MCRMdiffEqsResults, 
+            Span[Last[
+               Dimensions[$CellContext`c]] + 1, All]]]], {$CellContext`t, 0, 
+          100}, ImageSize -> 360, AspectRatio -> 1/2, PlotStyle -> PadRight[{
+            RGBColor[
+            0.9764705882352941, 0.6274509803921569, 0.24705882352941178`], 
+            RGBColor[
+            0.4470588235294118, 0.6627450980392157, 0.5607843137254902], 
+            RGBColor[0.6196078431372549, 0.35000000000000003`, 0.78], 
+            RGBColor[0., 0.4117647058823529, 0.5372549019607843], 
+            RGBColor[
+            0.8470588235294118, 0.06666666666666667, 0.34901960784313724`]}, 
+           Length[$CellContext`m], Black], PlotRange -> {0, All}, 
+         FrameLabel -> {$CellContext`t, 
+           Subscript[N, $CellContext`i]}]}]]], StandardForm],
+   ImageSizeCache->{360., {225.634033203125, 231.365966796875}}],
+  DynamicModuleValues:>{}]], "Output",
+ CellChangeTimes->{3.8859054392634897`*^9, 3.886543154541524*^9, 
+  3.886864394239641*^9, 3.8868649716622334`*^9, 3.8868656149627523`*^9, 
+  3.886865680880381*^9},
+ CellLabel->"Out[26]=",ExpressionUUID->"3e249d44-c4a8-45aa-acac-ea2e6e7195bd"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Row", "[", 
+  RowBox[{
+   RowBox[{"{", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"Column", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"Dynamic", "@", 
+          RowBox[{"LocatorPane", "[", 
+           RowBox[{
+            RowBox[{"Dynamic", "[", "c", "]"}], ",", 
+            RowBox[{"Show", "[", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{"Graphics", "[", 
+                RowBox[{"{", 
+                 RowBox[{
+                  RowBox[{"FaceForm", "@", 
+                   RowBox[{"RGBColor", "[", 
+                    RowBox[{
+                    FractionBox["4", "255"], ",", 
+                    FractionBox["41", "255"], ",", 
+                    FractionBox["64", "255"], ",", "0.15"}], "]"}]}], ",", 
+                  RowBox[{"EdgeForm", "@", 
+                   RowBox[{"RGBColor", "[", 
+                    RowBox[{
+                    FractionBox["4", "255"], ",", 
+                    FractionBox["41", "255"], ",", 
+                    FractionBox["64", "255"], ",", "0.8"}], "]"}]}], ",", 
+                  RowBox[{"Dynamic", "@", 
+                   RowBox[{"ConvexHullRegion", "[", 
+                    RowBox[{
+                    RowBox[{"addPCHvecs", "[", 
+                    RowBox[{
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"w", " ", "#"}], "&"}], "/@", "c"}], ")"}], "/", 
+                    "m"}], "]"}], "\[Union]", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{"0", ",", "0"}], "}"}], "}"}]}], "]"}]}], ",", 
+                  RowBox[{"Thickness", "[", "0.006", "]"}], ",", 
+                  RowBox[{"Arrowheads", "[", ".05", "]"}], ",", 
+                  RowBox[{"Dynamic", "@", 
+                   RowBox[{
+                    RowBox[{"MapIndexed", "[", 
+                    RowBox[{
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"PadRight", "[", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"{", 
+                    RowBox[{
+                    
+                    TemplateBox[<|
+                    "color" -> RGBColor[
+                    0.9764705882352941, 0.6274509803921569, 
+                    0.24705882352941178`]|>,
+                    "RGBColorSwatchTemplate"], ",", 
+                    
+                    TemplateBox[<|
+                    "color" -> RGBColor[
+                    0.4470588235294118, 0.6627450980392157, 
+                    0.5607843137254902]|>,
+                    "RGBColorSwatchTemplate"], ",", 
+                    
+                    TemplateBox[<|
+                    "color" -> RGBColor[
+                    0.6196078431372549, 0.35000000000000003`, 0.78]|>,
+                    "RGBColorSwatchTemplate"], ",", 
+                    
+                    TemplateBox[<|
+                    "color" -> RGBColor[
+                    0., 0.4117647058823529, 0.5372549019607843]|>,
+                    "RGBColorSwatchTemplate"], ",", 
+                    
+                    TemplateBox[<|
+                    "color" -> RGBColor[
+                    0.8470588235294118, 0.06666666666666667, 
+                    0.34901960784313724`]|>,
+                    "RGBColorSwatchTemplate"]}], "}"}], "[", 
+                    RowBox[{"[", 
+                    RowBox[{"{", 
+                    RowBox[{"4", ",", "2", ",", "5", ",", "1", ",", "3"}], 
+                    "}"}], "]"}], "]"}], ",", 
+                    RowBox[{"Length", "[", "m", "]"}], ",", "Black"}], "]"}], 
+                    "[", 
+                    RowBox[{"[", 
+                    RowBox[{"First", "@", "#2"}], "]"}], "]"}], ",", 
+                    RowBox[{"Arrow", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"{", 
+                    RowBox[{"0", ",", "0"}], "}"}], ",", "#1"}], "}"}], 
+                    "]"}]}], "}"}], "&"}], "]"}], "[", 
+                    RowBox[{
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"w", " ", "#"}], "&"}], "/@", "c"}], ")"}], "/", 
+                    "m"}], "]"}]}]}], "}"}], "]"}], "\[IndentingNewLine]", 
+               "}"}], ",", 
+              RowBox[{"PlotTheme", "\[Rule]", "\"\<Scientific\>\""}], ",", 
+              RowBox[{"AspectRatio", "\[Rule]", "1"}], ",", 
+              RowBox[{"PlotStyle", "\[Rule]", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"RGBColor", "[", 
+                  RowBox[{
+                   FractionBox["0", "255"], ",", 
+                   FractionBox["92", "255"], ",", 
+                   FractionBox["83", "255"]}], "]"}], ",", 
+                 RowBox[{"PointSize", "[", "0.015", "]"}]}], "}"}]}], ",", 
+              RowBox[{"ImageSize", "->", "300"}], ",", "\[IndentingNewLine]", 
+              
+              RowBox[{"PlotTheme", "->", "\"\<Scientific\>\""}], ",", 
+              RowBox[{"PlotRange", "->", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"{", 
+                  RowBox[{"0", ",", "1"}], "}"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{"0", ",", "1"}], "}"}]}], "}"}]}], ",", 
+              RowBox[{"FrameLabel", "->", 
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"Style", "[", 
+                   RowBox[{"#", ",", 
+                    RowBox[{"FontFamily", "->", "\"\<CMU Serif\>\""}], ",", 
+                    RowBox[{"FontSize", "->", "18"}]}], "]"}], "&"}], "/@", 
+                 RowBox[{"{", 
+                  RowBox[{
+                  "\"\<(\!\(\*StyleBox[\"C\",FontWeight->\"Bold\"]\)\!\(\*\
+SubscriptBox[\(\[VeryThinSpace]\), \(i\)]\)\!\(\*SubscriptBox[\()\), \(1\)]\)\
+\>\"", ",", 
+                   "\"\<(\!\(\*StyleBox[\"C\",FontWeight->\"Bold\"]\)\!\(\*\
+SubscriptBox[\(\[VeryThinSpace]\), \(i\)]\)\!\(\*SubscriptBox[\()\), \(2\)]\)\
+\>\""}], "}"}]}], ")"}]}], ",", 
+              RowBox[{"Frame", "->", "True"}], ",", 
+              RowBox[{"FrameTicks", "->", "None"}]}], "]"}], ",", 
+            RowBox[{"Appearance", "->", "None"}]}], "]"}]}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"Grid", "[", 
+          RowBox[{
+           RowBox[{"Join", "[", 
+            RowBox[{
+             RowBox[{"Table", "[", 
+              RowBox[{
+               RowBox[{"With", "[", 
+                RowBox[{
+                 RowBox[{"{", 
+                  RowBox[{"i", "=", "i"}], "}"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{
+                   RowBox[{"Style", "[", 
+                    RowBox[{
+                    RowBox[{"Subscript", "[", 
+                    RowBox[{"\"\<m\>\"", ",", "i"}], "]"}], ",", 
+                    RowBox[{"FontFamily", "->", "\"\<CMU Serif\>\""}]}], 
+                    "]"}], ",", 
+                   RowBox[{"Slider", "[", 
+                    RowBox[{
+                    RowBox[{"Dynamic", "[", 
+                    RowBox[{"m", "[", 
+                    RowBox[{"[", "i", "]"}], "]"}], "]"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"0.1", ",", "3"}], "}"}]}], "]"}]}], "}"}]}], 
+                "]"}], ",", 
+               RowBox[{"{", 
+                RowBox[{"i", ",", "1", ",", 
+                 RowBox[{"Length", "[", "m", "]"}]}], "}"}]}], "]"}], ",", 
+             RowBox[{"Table", "[", 
+              RowBox[{
+               RowBox[{"With", "[", 
+                RowBox[{
+                 RowBox[{"{", 
+                  RowBox[{"i", "=", "\[Alpha]"}], "}"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{
+                   RowBox[{"Style", "[", 
+                    RowBox[{
+                    RowBox[{"Subscript", "[", 
+                    RowBox[{"\"\<w\>\"", ",", "i"}], "]"}], ",", 
+                    RowBox[{"FontFamily", "->", "\"\<CMU Serif\>\""}]}], 
+                    "]"}], ",", 
+                   RowBox[{"Slider", "[", 
+                    RowBox[{
+                    RowBox[{"Dynamic", "[", 
+                    RowBox[{"w", "[", 
+                    RowBox[{"[", "i", "]"}], "]"}], "]"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"0.1", ",", "3"}], "}"}]}], "]"}]}], "}"}]}], 
+                "]"}], ",", 
+               RowBox[{"{", 
+                RowBox[{"\[Alpha]", ",", "1", ",", 
+                 RowBox[{"Length", "[", "w", "]"}]}], "}"}]}], "]"}]}], "]"}],
+            ",", 
+           RowBox[{"Alignment", "->", "Center"}]}], "]"}]}], 
+        "\[IndentingNewLine]", "}"}], ",", 
+       RowBox[{"Alignment", "->", "Center"}]}], "]"}], ",", 
+     RowBox[{"DynamicModule", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"K", "=", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", "1"}], "}"}]}], "}"}], ",", 
+       RowBox[{"Dynamic", "@", 
+        RowBox[{"Block", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"MCRMResults", "=", 
+             RowBox[{"MCRMQPPositive", "[", 
+              RowBox[{"K", ",", "c", ",", "m", ",", "w"}], "]"}]}], ",", 
+            RowBox[{"MCRMdiffEqsResults", "=", 
+             RowBox[{
+              RowBox[{"MCRMdiffEqs", "[", 
+               RowBox[{"c", ",", "m", ",", "w"}], "]"}], "@@", 
+              RowBox[{"Join", "[", 
+               RowBox[{"K", ",", "K", ",", 
+                RowBox[{"ConstantArray", "[", 
+                 RowBox[{"0.5", ",", 
+                  RowBox[{"First", "@", 
+                   RowBox[{"Dimensions", "[", "c", "]"}]}]}], "]"}]}], 
+               "]"}]}]}]}], "}"}], ",", "\[IndentingNewLine]", 
+          RowBox[{"Deploy", "@", 
+           RowBox[{"Column", "[", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"Show", "[", 
+                RowBox[{
+                 RowBox[{"{", "\[IndentingNewLine]", 
+                  RowBox[{
+                   RowBox[{"PFR", "[", 
+                    RowBox[{"c", ",", "m", ",", "w"}], "]"}], ",", 
+                   "\[IndentingNewLine]", 
+                   RowBox[{"Graphics", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Locator", "[", 
+                    RowBox[{"Dynamic", "[", "K", "]"}], "]"}], ",", 
+                    "\[IndentingNewLine]", 
+                    RowBox[{"PointSize", "[", "Large", "]"}], ",", 
+                    RowBox[{"Point", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"MCRMResults", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "}"}], "]"}], ",", 
+                    RowBox[{"FaceForm", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Opacity", "[", "0.6", "]"}], ",", 
+                    TemplateBox[<|"color" -> RGBColor[0.59, 0.89, 0.51]|>,
+                    "RGBColorSwatchTemplate"]}], "}"}], "]"}], ",", 
+                    RowBox[{"EdgeForm", "[", "None", "]"}], ",", 
+                    RowBox[{"Thickness", "[", 
+                    SuperscriptBox["10", 
+                    RowBox[{"-", "10"}]], "]"}], ",", "\[IndentingNewLine]", 
+                    RowBox[{"ConicHullRegion", "[", 
+                    RowBox[{
+                    RowBox[{"{", 
+                    RowBox[{"MCRMResults", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "}"}], ",", 
+                    RowBox[{"c", "[", 
+                    RowBox[{"[", 
+                    RowBox[{"Flatten", "@", 
+                    RowBox[{"Position", "[", 
+                    RowBox[{
+                    RowBox[{"MCRMResults", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}], ",", 
+                    RowBox[{"_", "?", 
+                    RowBox[{"(", 
+                    RowBox[{"GreaterThan", "[", 
+                    SuperscriptBox["10", 
+                    RowBox[{"-", "8"}]], "]"}], ")"}]}]}], "]"}]}], "]"}], 
+                    "]"}]}], "]"}]}], "\[IndentingNewLine]", "}"}], "]"}], 
+                   ",", "\[IndentingNewLine]", 
+                   RowBox[{"ParametricPlot", "[", 
+                    RowBox[{
+                    RowBox[{"MCRMdiffEqsResults", "[", 
+                    RowBox[{"[", 
+                    RowBox[{"1", ";;", 
+                    RowBox[{"Last", "@", 
+                    RowBox[{"Dimensions", "[", "c", "]"}]}]}], "]"}], "]"}], 
+                    ",", 
+                    RowBox[{"{", 
+                    RowBox[{"t", ",", "0", ",", "200"}], "}"}], ",", 
+                    RowBox[{"PlotStyle", "->", 
+                    RowBox[{
+                    RowBox[{"ColorData", "[", 
+                    RowBox[{"97", ",", "\"\<ColorList\>\""}], "]"}], "[", 
+                    RowBox[{"[", "1", "]"}], "]"}]}]}], "]"}]}], 
+                  "\[IndentingNewLine]", "}"}], ",", 
+                 RowBox[{"PlotRange", "->", 
+                  RowBox[{"{", 
+                   RowBox[{
+                    RowBox[{"{", 
+                    RowBox[{"0", ",", "3"}], "}"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"0", ",", "3"}], "}"}]}], "}"}]}], ",", 
+                 RowBox[{"ImageSize", "->", "Medium"}], ",", 
+                 RowBox[{"FrameLabel", "->", 
+                  RowBox[{"{", 
+                   RowBox[{
+                    TemplateBox[<|"boxes" -> FormBox[
+                    SubscriptBox[
+                    StyleBox["R", "TI"], "1"], TraditionalForm], 
+                    "errors" -> {}, "input" -> "R_1", "state" -> "Boxes"|>,
+                    "TeXAssistantTemplate"], ",", 
+                    TemplateBox[<|"boxes" -> FormBox[
+                    SubscriptBox[
+                    StyleBox["R", "TI"], "2"], TraditionalForm], 
+                    "errors" -> {}, "input" -> "R_2", "state" -> "Boxes"|>,
+                    "TeXAssistantTemplate"]}], "}"}]}], ",", 
+                 RowBox[{"Epilog", "->", 
+                  RowBox[{"{", 
+                   RowBox[{
+                    RowBox[{"PointSize", "[", "0.03", "]"}], ",", 
+                    RowBox[{"Point", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"2.5", ",", "2.8"}], "}"}], "]"}], ",", 
+                    RowBox[{"Text", "[", 
+                    RowBox[{
+                    RowBox[{"Style", "[", 
+                    RowBox[{
+                    TemplateBox[<|"boxes" -> FormBox[
+                    SuperscriptBox[
+                    StyleBox["R", "TI"], "\[FivePointedStar]"], 
+                    TraditionalForm], "errors" -> {}, "input" -> "R^\\star", 
+                    "state" -> "Boxes"|>,
+                    "TeXAssistantTemplate"], ",", 
+                    RowBox[{
+                    "FontFamily", "->", "\"\<CMU Classical Serif\>\""}], ",", 
+                    
+                    RowBox[{"FontSize", "->", "16"}]}], "]"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"2.74", ",", "2.8"}], "}"}]}], "]"}], ",", 
+                    RowBox[{"Locator", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"2.5", ",", "2.6"}], "}"}], "]"}], ",", 
+                    RowBox[{"Text", "[", 
+                    RowBox[{
+                    RowBox[{"Style", "[", 
+                    RowBox[{"\"\<\!\(\*TemplateBox[<|\"boxes\" -> FormBox[
+StyleBox[\"K\", FontSlant -> \"Bold\"], TraditionalForm], \"errors\" -> {}, \
+\"input\" -> \"\\\\mathbf K\", \"state\" -> \
+\"Boxes\"|>,\"TeXAssistantTemplate\"]\)\>\"", ",", 
+                    RowBox[{
+                    "FontFamily", "->", "\"\<CMU Classical Serif\>\""}], ",", 
+                    
+                    RowBox[{"FontSize", "->", "16"}]}], "]"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"2.7", ",", "2.6"}], "}"}]}], "]"}], ",", 
+                    "\[IndentingNewLine]", 
+                    RowBox[{"Text", "[", 
+                    RowBox[{
+                    RowBox[{"Style", "[", 
+                    RowBox[{
+                    TemplateBox[<|"boxes" -> FormBox[
+                    RowBox[{
+                    StyleBox["R", FontSlant -> "Bold"], "(", 
+                    StyleBox["t", "TI"], ")"}], TraditionalForm], 
+                    "errors" -> {}, "input" -> "\\mathbf R(t)", "state" -> 
+                    "Boxes"|>,
+                    "TeXAssistantTemplate"], ",", 
+                    RowBox[{
+                    "FontFamily", "->", "\"\<CMU Classical Serif\>\""}], ",", 
+                    
+                    RowBox[{"FontSize", "->", "16"}]}], "]"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"2.76", ",", "2.4"}], "}"}]}], "]"}], ",", 
+                    "\[IndentingNewLine]", 
+                    RowBox[{
+                    RowBox[{"ColorData", "[", 
+                    RowBox[{"97", ",", "\"\<ColorList\>\""}], "]"}], "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], ",", "Thick", ",", 
+                    RowBox[{"Line", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"{", 
+                    RowBox[{"2.45", ",", "2.4"}], "}"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"2.55", ",", "2.4"}], "}"}]}], "}"}], "]"}]}], 
+                   "\[IndentingNewLine]", "}"}]}]}], "]"}], 
+               "\[IndentingNewLine]", ",", 
+               RowBox[{"Plot", "[", 
+                RowBox[{
+                 RowBox[{"Evaluate", "[", 
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{"Table", "[", 
+                    RowBox[{
+                    RowBox[{"Callout", "[", 
+                    RowBox[{
+                    RowBox[{"#", "[", 
+                    RowBox[{"[", "i", "]"}], "]"}], ",", 
+                    RowBox[{"Style", "[", 
+                    RowBox[{
+                    RowBox[{"\"\<i=\>\"", "<>", 
+                    RowBox[{"ToString", "[", "i", "]"}]}], ",", 
+                    RowBox[{"FontFamily", "->", "\"\<CMU Serif\>\""}], ",", 
+                    RowBox[{"FontSlant", "->", "Italic"}]}], "]"}], ",", 
+                    RowBox[{"LabelStyle", "\[Rule]", 
+                    RowBox[{"{", 
+                    RowBox[{"Bold", ",", 
+                    RowBox[{"FontSize", "->", "14"}]}], "}"}]}]}], "]"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"i", ",", "1", ",", 
+                    RowBox[{"Length", "[", "m", "]"}]}], "}"}]}], "]"}], 
+                    "&"}], "@", 
+                   RowBox[{"(", 
+                    RowBox[{"MCRMdiffEqsResults", "[", 
+                    RowBox[{"[", 
+                    RowBox[{
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{"Last", "@", 
+                    RowBox[{"Dimensions", "[", "c", "]"}]}], "+", "1"}], 
+                    ")"}], ";;"}], "]"}], "]"}], ")"}]}], "]"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{"t", ",", "0", ",", "100"}], "}"}], ",", 
+                 RowBox[{"ImageSize", "->", "Medium"}], ",", 
+                 RowBox[{"PlotStyle", "->", 
+                  RowBox[{"PadRight", "[", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{"{", 
+                    RowBox[{
+                    
+                    TemplateBox[<|
+                    "color" -> 
+                    RGBColor[
+                    0.9764705882352941, 0.6274509803921569, 
+                    0.24705882352941178`]|>,
+                    "RGBColorSwatchTemplate"], ",", 
+                    
+                    TemplateBox[<|
+                    "color" -> 
+                    RGBColor[
+                    0.4470588235294118, 0.6627450980392157, 
+                    0.5607843137254902]|>,
+                    "RGBColorSwatchTemplate"], ",", 
+                    
+                    TemplateBox[<|
+                    "color" -> 
+                    RGBColor[0.6196078431372549, 0.35000000000000003`, 0.78]|>,
+                    "RGBColorSwatchTemplate"], ",", 
+                    
+                    TemplateBox[<|
+                    "color" -> 
+                    RGBColor[0., 0.4117647058823529, 0.5372549019607843]|>,
+                    "RGBColorSwatchTemplate"], ",", 
+                    
+                    TemplateBox[<|
+                    "color" -> 
+                    RGBColor[
+                    0.8470588235294118, 0.06666666666666667, 
+                    0.34901960784313724`]|>,
+                    "RGBColorSwatchTemplate"]}], "}"}], "[", 
+                    RowBox[{"[", 
+                    RowBox[{"{", 
+                    RowBox[{"4", ",", "2", ",", "5", ",", "1", ",", "3"}], 
+                    "}"}], "]"}], "]"}], ",", 
+                    RowBox[{"Length", "[", "m", "]"}], ",", "Black"}], 
+                   "]"}]}], ",", 
+                 RowBox[{"PlotRange", "->", 
+                  RowBox[{"{", 
+                   RowBox[{"0", ",", "All"}], "}"}]}], ",", 
+                 RowBox[{"FrameLabel", "->", 
+                  RowBox[{"{", 
+                   RowBox[{
+                    TemplateBox[<|"boxes" -> FormBox[
+                    StyleBox["t", "TI"], TraditionalForm], "errors" -> {}, 
+                    "input" -> "t", "state" -> "Boxes"|>,
+                    "TeXAssistantTemplate"], ",", 
+                    TemplateBox[<|"boxes" -> FormBox[
+                    SubscriptBox[
+                    StyleBox["N", "TI"], 
+                    StyleBox["i", "TI"]], TraditionalForm], "errors" -> {}, 
+                    "input" -> "N_i", "state" -> "Boxes"|>,
+                    "TeXAssistantTemplate"]}], "}"}]}], ",", 
+                 RowBox[{"PlotTheme", "->", "\"\<Scientific\>\""}]}], "]"}]}],
+               "}"}], ",", 
+             RowBox[{"Alignment", "->", "Center"}]}], "]"}]}]}], "]"}]}]}], 
+      "\[IndentingNewLine]", "]"}]}], "}"}], ",", 
+   RowBox[{"Alignment", "->", "Center"}]}], "]"}]], "Input",
+ CellChangeTimes->CompressedData["
+1:eJxTTMoPSmViYGAQB2IQ/Yjp20eVl28cWeoWfgfRqne6/oDofXcPgmmJ/FYm
+VSDt+OQAM4jOTbnODqIX/DAWANGZiUdEQfQ9hnh5EC0pJ6IDojM8usD0nPrP
+hiD6lEqnI4h+NWmZG4jWsX7pAaI5DG5c9QTSG7beB9PlXrbcnm/eOD7zegKm
+T+st0QHR0/Z3GYPoBSaHHoPoyT3znoHoZTMOLIwD0mIvLiwD0cFRa7bzvH3j
+qBH+eReIfiFeLsELpG0unpUE0ZOi950H0TfFhS6B6Ot3pDa2fH7jOCVSDUyf
+Kl994hiQtlk04wKI9lJuuAKiFz2RfAqid7XrvwbRp+Uk3oPozVX+zMeB9LY7
+1WC6R3fCkn9fgOH0WXgpiN5083Adw9c3jlud7k8F0QAf5tA2
+  "],
+ CellLabel->"In[28]:=",ExpressionUUID->"98e5e22c-650c-4a86-b482-111a5df84097"],
+
+Cell[BoxData[
+ TemplateBox[{
+   TagBox[
+    GridBox[{{
+       DynamicBox[
+        ToBoxes[
+         LocatorPane[
+          Dynamic[$CellContext`c], 
+          Show[{
+            Graphics[{
+              FaceForm[
+               RGBColor[4/255, 41/255, 64/255, 0.15]], 
+              EdgeForm[
+               RGBColor[4/255, 41/255, 64/255, 0.8]], 
+              Dynamic[
+               ConvexHullRegion[
+                Union[
+                 $CellContext`addPCHvecs[
+                 Map[$CellContext`w #& , $CellContext`c]/$CellContext`m], {{0,
+                  0}}]]], 
+              Thickness[0.006], 
+              Arrowheads[0.05], 
+              Dynamic[
+               MapIndexed[{
+                 Part[
+                  PadRight[
+                   Part[{
+                    RGBColor[
+                    0.9764705882352941, 0.6274509803921569, 
+                    0.24705882352941178`], 
+                    RGBColor[
+                    0.4470588235294118, 0.6627450980392157, 
+                    0.5607843137254902], 
+                    RGBColor[0.6196078431372549, 0.35000000000000003`, 0.78], 
+                    
+                    RGBColor[0., 0.4117647058823529, 0.5372549019607843], 
+                    RGBColor[
+                    0.8470588235294118, 0.06666666666666667, 
+                    0.34901960784313724`]}, {4, 2, 5, 1, 3}], 
+                   Length[$CellContext`m], Black], 
+                  First[#2]], 
+                 Arrow[{{0, 0}, #}]}& ][
+               Map[$CellContext`w #& , $CellContext`c]/$CellContext`m]]}]}, 
+           PlotTheme -> "Scientific", AspectRatio -> 1, PlotStyle -> {
+             RGBColor[0/255, 92/255, 83/255], 
+             PointSize[0.015]}, ImageSize -> 300, PlotTheme -> "Scientific", 
+           PlotRange -> {{0, 1}, {0, 1}}, FrameLabel -> 
+           Map[Style[#, FontFamily -> "CMU Serif", FontSize -> 18]& , {
+             "(\!\(\*StyleBox[\"C\",FontWeight->\"Bold\"]\)\!\(\*SubscriptBox[\
+\(\[VeryThinSpace]\), \(i\)]\)\!\(\*SubscriptBox[\()\), \(1\)]\)", 
+              "(\!\(\*StyleBox[\"C\",FontWeight->\"Bold\"]\)\!\(\*\
+SubscriptBox[\(\[VeryThinSpace]\), \(i\)]\)\!\(\*SubscriptBox[\()\), \
+\(2\)]\)"}], Frame -> True, FrameTicks -> None], Appearance -> None], 
+         StandardForm]]}, {
+       TagBox[
+        GridBox[{{
+           StyleBox[
+            SubscriptBox["\"m\"", "1"], FontFamily -> "CMU Serif", 
+            StripOnInput -> False], 
+           SliderBox[
+            Dynamic[
+             Part[$CellContext`m, 1]], {0.1, 3}]}, {
+           StyleBox[
+            SubscriptBox["\"m\"", "2"], FontFamily -> "CMU Serif", 
+            StripOnInput -> False], 
+           SliderBox[
+            Dynamic[
+             Part[$CellContext`m, 2]], {0.1, 3}]}, {
+           StyleBox[
+            SubscriptBox["\"m\"", "3"], FontFamily -> "CMU Serif", 
+            StripOnInput -> False], 
+           SliderBox[
+            Dynamic[
+             Part[$CellContext`m, 3]], {0.1, 3}]}, {
+           StyleBox[
+            SubscriptBox["\"m\"", "4"], FontFamily -> "CMU Serif", 
+            StripOnInput -> False], 
+           SliderBox[
+            Dynamic[
+             Part[$CellContext`m, 4]], {0.1, 3}]}, {
+           StyleBox[
+            SubscriptBox["\"m\"", "5"], FontFamily -> "CMU Serif", 
+            StripOnInput -> False], 
+           SliderBox[
+            Dynamic[
+             Part[$CellContext`m, 5]], {0.1, 3}]}, {
+           StyleBox[
+            SubscriptBox["\"w\"", "1"], FontFamily -> "CMU Serif", 
+            StripOnInput -> False], 
+           SliderBox[
+            Dynamic[
+             Part[$CellContext`w, 1]], {0.1, 3}]}, {
+           StyleBox[
+            SubscriptBox["\"w\"", "2"], FontFamily -> "CMU Serif", 
+            StripOnInput -> False], 
+           SliderBox[
+            Dynamic[
+             Part[$CellContext`w, 2]], {0.1, 3}]}}, 
+         GridBoxAlignment -> {"Columns" -> {{Center}}}, AutoDelete -> False, 
+         GridBoxItemSize -> {
+          "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], "Grid"]}}, 
+     GridBoxAlignment -> {"Columns" -> {{Center}}}, DefaultBaseStyle -> 
+     "Column", 
+     GridBoxItemSize -> {
+      "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], "Column"], 
+   DynamicModuleBox[{K$$ = {1.7479395604396522`, 2.2301927982731553`}}, 
+    DynamicBox[
+     ToBoxes[
+      Block[{$CellContext`MCRMResults = $CellContext`MCRMQPPositive[
+         K$$, $CellContext`c, $CellContext`m, $CellContext`w], \
+$CellContext`MCRMdiffEqsResults = Apply[
+          $CellContext`MCRMdiffEqs[$CellContext`c, $CellContext`m, \
+$CellContext`w], 
+          Join[K$$, K$$, 
+           ConstantArray[0.5, 
+            First[
+             Dimensions[$CellContext`c]]]]]}, 
+       Deploy[
+        Column[{
+          Show[{
+            $CellContext`PFR[$CellContext`c, $CellContext`m, $CellContext`w], 
+            
+            Graphics[{
+              Locator[
+               Dynamic[K$$]], 
+              PointSize[Large], 
+              Point[{
+                Part[$CellContext`MCRMResults, 1]}], 
+              FaceForm[{
+                Opacity[0.6], 
+                RGBColor[0.59, 0.89, 0.51]}], 
+              EdgeForm[None], 
+              Thickness[10^(-10)], 
+              ConicHullRegion[{
+                Part[$CellContext`MCRMResults, 1]}, 
+               Part[$CellContext`c, 
+                Flatten[
+                 Position[
+                  Part[$CellContext`MCRMResults, 2], 
+                  PatternTest[
+                   Blank[], 
+                   GreaterThan[10^(-8)]]]]]]}], 
+            ParametricPlot[
+             Part[$CellContext`MCRMdiffEqsResults, 
+              Span[1, 
+               Last[
+                Dimensions[$CellContext`c]]]], {$CellContext`t, 0, 200}, 
+             PlotStyle -> Part[
+               ColorData[97, "ColorList"], 1]]}, 
+           PlotRange -> {{0, 3}, {0, 3}}, ImageSize -> Medium, 
+           FrameLabel -> {
+             Subscript[$CellContext`R, 1], 
+             Subscript[$CellContext`R, 2]}, Epilog -> {
+             PointSize[0.03], 
+             Point[{2.5, 2.8}], 
+             Text[
+              
+              Style[$CellContext`R^$CellContext`\[FivePointedStar], 
+               FontFamily -> "CMU Classical Serif", FontSize -> 16], {2.74, 
+              2.8}], 
+             Locator[{2.5, 2.6}], 
+             Text[
+              Style[
+              "\!\(\*TemplateBox[<|\"boxes\" -> FormBox[StyleBox[\"K\", \
+FontSlant -> \"Bold\"], TraditionalForm], \"errors\" -> {}, \"input\" -> \"\\\
+\\mathbf K\", \"state\" -> \"Boxes\"|>,\"TeXAssistantTemplate\"]\)", 
+               FontFamily -> "CMU Classical Serif", FontSize -> 16], {2.7, 
+              2.6}], 
+             Text[
+              Style[
+               $CellContext`R[$CellContext`t], FontFamily -> 
+               "CMU Classical Serif", FontSize -> 16], {2.76, 2.4}], 
+             Part[
+              ColorData[97, "ColorList"], 1], Thick, 
+             Line[{{2.45, 2.4}, {2.55, 2.4}}]}], 
+          Plot[
+           Evaluate[
+            (Table[
+             Callout[
+              Part[#, $CellContext`i], 
+              Style[
+              "i=" <> ToString[$CellContext`i], FontFamily -> "CMU Serif", 
+               FontSlant -> Italic], 
+              LabelStyle -> {Bold, FontSize -> 14}], {$CellContext`i, 1, 
+              Length[$CellContext`m]}]& )[
+             Part[$CellContext`MCRMdiffEqsResults, 
+              Span[Last[
+                 Dimensions[$CellContext`c]] + 1, All]]]], {$CellContext`t, 0,
+             100}, ImageSize -> Medium, PlotStyle -> PadRight[
+             Part[{
+               RGBColor[
+               0.9764705882352941, 0.6274509803921569, 0.24705882352941178`], 
+               
+               RGBColor[
+               0.4470588235294118, 0.6627450980392157, 0.5607843137254902], 
+               RGBColor[0.6196078431372549, 0.35000000000000003`, 0.78], 
+               RGBColor[0., 0.4117647058823529, 0.5372549019607843], 
+               RGBColor[
+               0.8470588235294118, 0.06666666666666667, 
+                0.34901960784313724`]}, {4, 2, 5, 1, 3}], 
+             Length[$CellContext`m], Black], PlotRange -> {0, All}, 
+           FrameLabel -> {$CellContext`t, 
+             Subscript[N, $CellContext`i]}, PlotTheme -> "Scientific"]}, 
+         Alignment -> Center]]], StandardForm], 
+     ImageSizeCache -> {360., {271.634033203125, 277.365966796875}}], 
+    DynamicModuleValues :> {}]},
+  "Row",
+  DisplayFunction->(PaneBox[
+    RowBox[{
+      TemplateSlotSequence[1, "\[InvisibleSpace]"]}], Alignment -> Center]& ),
+  
+  InterpretationFunction->(RowBox[{"Row", "[", 
+     RowBox[{
+       RowBox[{"{", 
+         TemplateSlotSequence[1, ","], "}"}], ",", 
+       RowBox[{"Alignment", "\[Rule]", "Center"}]}], "]"}]& )]], "Output",
+ CellChangeTimes->{3.886865718931962*^9},
+ CellLabel->"Out[28]=",ExpressionUUID->"ab211ce3-9655-4df3-bb44-1fefc3c9d929"]
+}, Open  ]]
+},
+WindowSize->{1342, 968},
+WindowMargins->{{-1452, Automatic}, {465, Automatic}},
+TaggingRules-><|"TryRealOnly" -> False|>,
+FrontEndVersion->"13.2 for Mac OS X ARM (64-bit) (January 30, 2023)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"58c98957-fb96-4bc9-9efb-1fba39124144"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 166, 3, 35, "Text",ExpressionUUID->"36779f25-b186-4274-a0be-1d3270222808"],
+Cell[727, 25, 1661, 41, 89, "Input",ExpressionUUID->"21cd8b03-76d2-4fdb-8593-cd55db9c7c13",
+ InitializationCell->True],
+Cell[2391, 68, 2993, 78, 149, "Input",ExpressionUUID->"60357810-26fe-4afe-804c-d36c20fd5cee",
+ InitializationCell->True],
+Cell[5387, 148, 795, 23, 46, "Input",ExpressionUUID->"f61cc744-98f3-44a2-92df-0f8978599290",
+ InitializationCell->True],
+Cell[6185, 173, 683, 15, 37, "Text",ExpressionUUID->"fb561166-6475-434e-bd72-cbb6c3df69ad"],
+Cell[CellGroupData[{
+Cell[6893, 192, 6458, 151, 283, "Input",ExpressionUUID->"2500b529-4ddb-4f95-82e4-50af6e616ebe",
+ InitializationCell->True],
+Cell[13354, 345, 3300, 64, 525, "Output",ExpressionUUID->"ad32f2b1-a6c9-432a-82e9-17bd5dc2e027"]
+}, Open  ]],
+Cell[16669, 412, 874, 23, 37, "Text",ExpressionUUID->"3d7ac75e-7e82-474d-8aaa-3ccfb560b968"],
+Cell[CellGroupData[{
+Cell[17568, 439, 1920, 51, 68, "Input",ExpressionUUID->"167a388c-5158-489a-b99d-962e188b4209",
+ InitializationCell->True],
+Cell[19491, 492, 1958, 47, 211, "Output",ExpressionUUID->"65681bf6-8a44-48de-87b3-f4705ede1024"]
+}, Open  ]],
+Cell[21464, 542, 2117, 59, 94, "Input",ExpressionUUID->"14048c5d-9e48-4781-b072-3c4dd30b78ca",
+ InitializationCell->True],
+Cell[23584, 603, 181, 3, 35, "Text",ExpressionUUID->"2a112400-9a28-43bb-86da-47c1ea915c9e"],
+Cell[CellGroupData[{
+Cell[23790, 610, 4833, 133, 143, "Input",ExpressionUUID->"26bbf9bc-01c8-439b-931f-0632a253ef50",
+ InitializationCell->True],
+Cell[28626, 745, 2253, 47, 373, "Output",ExpressionUUID->"8b6a3abe-ee4f-42fb-a0a0-dadd9e219035"]
+}, Open  ]],
+Cell[30894, 795, 1543, 48, 131, "Input",ExpressionUUID->"435a3769-693b-4323-8033-68a689b17fc6",
+ InitializationCell->True],
+Cell[32440, 845, 2515, 63, 110, "Input",ExpressionUUID->"406c36d3-dae8-4a52-a38f-8b3f9f4f1d3d",
+ InitializationCell->True],
+Cell[34958, 910, 515, 13, 37, "Text",ExpressionUUID->"2458f631-8ba7-4461-83f8-7ccba6ea2efe"],
+Cell[CellGroupData[{
+Cell[35498, 927, 8484, 184, 444, "Input",ExpressionUUID->"c3c7fc6c-c891-479e-ae5c-f76cd6a410d6"],
+Cell[43985, 1113, 3619, 79, 381, "Output",ExpressionUUID->"bb42aedc-763d-4f40-bb65-e3e8e1701559"]
+}, Open  ]],
+Cell[47619, 1195, 187, 3, 35, "Text",ExpressionUUID->"68da97f0-4dd1-4cf4-86ca-bd6d6973b3a7"],
+Cell[CellGroupData[{
+Cell[47831, 1202, 13160, 290, 463, "Input",ExpressionUUID->"1d10156d-30bc-4acd-8479-90e4ba6ee4fb"],
+Cell[60994, 1494, 4114, 97, 477, "Output",ExpressionUUID->"3e249d44-c4a8-45aa-acac-ea2e6e7195bd"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[65145, 1596, 22602, 501, 827, "Input",ExpressionUUID->"98e5e22c-650c-4a86-b482-111a5df84097"],
+Cell[87750, 2099, 8909, 217, 569, "Output",ExpressionUUID->"ab211ce3-9655-4df3-bb44-1fefc3c9d929"]
+}, Open  ]]
+}
+]
+*)
+
